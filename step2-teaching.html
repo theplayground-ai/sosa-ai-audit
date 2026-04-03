@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOSA x AI - Step 2: Skills + Teaching</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  :root {
+    --green: #0f3d37; --green-light: #1a5c52; --green-lighter: #e8f0ef;
+    --teal: #243f3f; --dark: #221F20; --white: #ffffff; --off-white: #f8f9fa;
+    --gray-100: #f7f7f7; --gray-200: #e9ecef; --gray-300: #dee2e6;
+    --gray-400: #adb5bd; --gray-500: #6c757d; --accent: #c8a96e;
+    --accent-light: #f5eddf; --blue: #2980b9; --radius: 16px;
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08); --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',-apple-system,sans-serif; background:var(--white); color:var(--dark); line-height:1.6; -webkit-font-smoothing:antialiased; }
+
+  .nav { position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--gray-200);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between; }
+  .nav-brand { font-weight:800;font-size:14px;letter-spacing:3px;color:var(--green);text-transform:uppercase; }
+  .nav-brand span { color:var(--gray-400);font-weight:400;margin:0 8px; }
+  .nav-links { display:flex;gap:32px; }
+  .nav-links a { text-decoration:none;color:var(--gray-500);font-size:13px;font-weight:500;letter-spacing:0.5px;transition:color 0.2s; }
+  .nav-links a:hover,.nav-links a.active { color:var(--green); }
+  .nav-tag { background:var(--accent);color:var(--dark);padding:6px 16px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:0.5px; }
+
+  .section { padding:80px 60px;max-width:1400px;margin:0 auto; }
+  .section-label { font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:12px; }
+  .section-title { font-size:40px;font-weight:800;line-height:1.15;color:var(--dark);margin-bottom:16px;letter-spacing:-0.5px; }
+  .section-sub { font-size:18px;color:var(--gray-500);max-width:640px;line-height:1.7;font-weight:400; }
+
+  .hero { margin-top:64px;background:linear-gradient(160deg,var(--green) 0%,var(--teal) 40%,var(--dark) 100%);padding:80px 60px 60px;color:white;position:relative;overflow:hidden; }
+  .hero::before { content:'';position:absolute;top:-50%;right:-20%;width:800px;height:800px;background:radial-gradient(circle,rgba(200,169,110,0.08) 0%,transparent 70%);border-radius:50%; }
+  .hero-content { position:relative;z-index:1;max-width:1400px;margin:0 auto; }
+  .hero-eyebrow { font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:12px; }
+  .hero-eyebrow::before { content:'';width:40px;height:1px;background:var(--accent); }
+  .hero h1 { font-size:48px;font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;max-width:800px; }
+  .hero p { font-size:18px;line-height:1.7;opacity:0.8;max-width:600px;font-weight:300; }
+
+  .topic-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:40px; }
+  .topic-card { background:white;border-radius:var(--radius);border:1px solid var(--gray-200);overflow:hidden;transition:all 0.3s;cursor:default; }
+  .topic-card:hover { box-shadow:var(--shadow-lg);transform:translateY(-4px); }
+  .topic-img { width:100%;height:200px;background-size:cover;background-position:center;position:relative; }
+  .topic-img::after { content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%); }
+  .topic-num { position:absolute;top:16px;left:16px;width:36px;height:36px;border-radius:50%;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;z-index:1; }
+  .topic-duration { position:absolute;top:16px;right:16px;padding:4px 12px;border-radius:100px;background:rgba(0,0,0,0.5);color:white;font-size:11px;font-weight:700;z-index:1;backdrop-filter:blur(4px); }
+  .topic-body { padding:24px; }
+  .topic-body h3 { font-size:18px;font-weight:700;margin-bottom:8px; }
+  .topic-body p { font-size:14px;color:var(--gray-500);line-height:1.6;margin-bottom:16px; }
+  .topic-tags { display:flex;gap:6px;flex-wrap:wrap; }
+  .topic-tag { padding:4px 10px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase; }
+  .topic-tag.sosa { background:rgba(15,61,55,0.08);color:var(--green); }
+  .topic-tag.video { background:rgba(200,169,110,0.15);color:#8a6d3b; }
+  .topic-tag.all { background:rgba(41,128,185,0.1);color:var(--blue); }
+
+  .agenda { background:var(--off-white); }
+  .agenda-timeline { position:relative;padding-left:40px;margin-top:40px; }
+  .agenda-timeline::before { content:'';position:absolute;left:15px;top:0;bottom:0;width:2px;background:var(--gray-200); }
+  .agenda-item { position:relative;padding:20px 0; }
+  .agenda-item::before { content:'';position:absolute;left:-31px;top:26px;width:14px;height:14px;border-radius:50%;border:3px solid var(--green);background:white; }
+  .agenda-item.done::before { background:var(--green); }
+  .agenda-time { font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:4px; }
+  .agenda-title { font-size:18px;font-weight:700;color:var(--dark);margin-bottom:4px; }
+  .agenda-desc { font-size:14px;color:var(--gray-500);max-width:600px; }
+
+  .cmd-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px; }
+  .cmd-card { background:white;border-radius:12px;border:1px solid var(--gray-200);padding:24px;transition:all 0.3s; }
+  .cmd-card:hover { box-shadow:var(--shadow-md);border-color:var(--green); }
+  .cmd-name { font-family:'SF Mono',Monaco,monospace;font-size:15px;font-weight:700;color:var(--green);margin-bottom:8px;background:var(--green-lighter);display:inline-block;padding:4px 12px;border-radius:6px; }
+  .cmd-desc { font-size:14px;color:var(--gray-500);line-height:1.6;margin-bottom:12px; }
+  .cmd-example { font-family:'SF Mono',Monaco,monospace;font-size:12px;color:var(--dark);background:var(--gray-100);padding:10px 14px;border-radius:8px;border:1px solid var(--gray-200); }
+  .cmd-sosa { font-size:12px;font-weight:600;color:var(--accent);margin-top:10px; }
+
+  .skill-section { background:var(--off-white); }
+  .skill-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:40px; }
+  .skill-card { background:white;border-radius:var(--radius);border:1px solid var(--gray-200);padding:28px;position:relative;overflow:hidden; }
+  .skill-card::before { content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--green); }
+  .skill-card.video-skill::before { background:var(--accent); }
+  .skill-card h3 { font-size:17px;font-weight:700;margin-bottom:8px; }
+  .skill-card p { font-size:14px;color:var(--gray-500);line-height:1.6;margin-bottom:16px; }
+  .skill-file { font-family:'SF Mono',Monaco,monospace;font-size:12px;background:var(--gray-100);padding:12px 16px;border-radius:8px;border:1px solid var(--gray-200);margin-bottom:12px;white-space:pre-wrap;line-height:1.6;color:var(--dark); }
+  .skill-label { font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray-400);margin-bottom:6px; }
+
+  .video-section { background:white; }
+  .video-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px; }
+  .video-card { background:var(--gray-100);border-radius:var(--radius);padding:24px;border:1px solid var(--gray-200); }
+  .video-card h4 { font-size:15px;font-weight:700;margin-bottom:6px; }
+  .video-card p { font-size:13px;color:var(--gray-500);line-height:1.6;margin-bottom:12px; }
+  .video-tool { display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--green);padding:6px 12px;background:var(--green-lighter);border-radius:100px;display:inline-flex; }
+
+  .checklist { margin-top:40px; }
+  .check-item { display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:1px solid var(--gray-100); }
+  .check-box { width:22px;height:22px;border-radius:6px;border:2px solid var(--gray-300);flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:12px;color:white; }
+  .check-box.checked { background:var(--green);border-color:var(--green); }
+  .check-text { font-size:15px;font-weight:500;color:var(--dark); }
+  .check-sub { font-size:13px;color:var(--gray-500);margin-top:2px; }
+
+  .cta { background:linear-gradient(160deg,var(--green) 0%,var(--teal) 100%);padding:60px;text-align:center;color:white; }
+  .cta h2 { font-size:32px;font-weight:800;margin-bottom:12px; }
+  .cta p { font-size:16px;opacity:0.8;max-width:500px;margin:0 auto 32px;font-weight:300; }
+  .cta-btn { padding:14px 36px;border-radius:100px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;background:white;color:var(--green);border:none;font-family:inherit;transition:all 0.3s; }
+  .cta-btn:hover { transform:translateY(-2px);box-shadow:var(--shadow-lg); }
+
+  .fade-in { opacity:0;transform:translateY(24px);transition:opacity 0.6s ease-out,transform 0.6s ease-out; }
+  .fade-in.visible { opacity:1;transform:translateY(0); }
+
+  @media (max-width:768px) {
+    .section { padding:60px 24px; }
+    .hero { padding:60px 24px; }
+    .hero h1 { font-size:32px; }
+    .topic-grid,.skill-grid,.cmd-grid,.video-grid { grid-template-columns:1fr; }
+    .nav-links { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">SOSA <span>x</span> AI</div>
+  <div class="nav-links">
+    <a href="#agenda" class="active">Agenda</a>
+    <a href="#commands">Commands</a>
+    <a href="#skills">Skills</a>
+    <a href="#video">Video Team</a>
+    <a href="#topics">Deep Dives</a>
+    <a href="#homework">Next Steps</a>
+  </div>
+  <div class="nav-tag">Step 2: Teaching Session</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Session 2 of 4</div>
+    <h1>Skills, Commands + Implementation</h1>
+    <p>Tonight we turn Claude Code from a chatbot into your operations team. You'll learn to build custom skills, automate workflows, and see live implementations built for SOSA.</p>
+  </div>
+</section>
+
+<!-- Agenda -->
+<section class="section agenda" id="agenda">
+  <div class="section-label">Tonight's Session</div>
+  <div class="section-title fade-in">Session Agenda</div>
+  <div class="section-sub fade-in">Everything we're covering, in order. About 2-3 hours total.</div>
+  <div class="agenda-timeline fade-in">
+    <div class="agenda-item done">
+      <div class="agenda-time">Completed - Session 1</div>
+      <div class="agenda-title">Setup + Context</div>
+      <div class="agenda-desc">Claude Code installed, CLAUDE.md configured, context files filled in. You're speaking Claude's language.</div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">Part 1 - 20 min</div>
+      <div class="agenda-title">Slash Commands: Your Daily Toolkit</div>
+      <div class="agenda-desc">The built-in commands that make Claude Code fast. /init, /compact, /cost, /clear, and how to chain them for different workflows.</div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">Part 2 - 30 min</div>
+      <div class="agenda-title">Custom Skills: Building Your Own Automations</div>
+      <div class="agenda-desc">The real power. How to create reusable skills that run entire workflows with one command. We'll build 2-3 live for SOSA.</div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">Part 3 - 20 min</div>
+      <div class="agenda-title">CLAUDE.md Mastery: Teaching Claude Who You Are</div>
+      <div class="agenda-desc">How to structure your context files so Claude understands SOSA's mission, voice, partners, and operations without being told every time.</div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">Part 4 - 30 min</div>
+      <div class="agenda-title">Video + Content Pipeline (For the Videographer)</div>
+      <div class="agenda-desc">FFmpeg workflows, transcript extraction, content repurposing, automated show notes, and training Claude to match SOSA's editing style.</div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">Part 5 - 30 min</div>
+      <div class="agenda-title">AI Audit Walkthrough + Live Demos</div>
+      <div class="agenda-desc">Walk through the full audit dashboard together. See the DM bot, email drip, content calendar, and impact dashboard working with SOSA's real data.</div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">Part 6 - 20 min</div>
+      <div class="agenda-title">Homework + Next Steps</div>
+      <div class="agenda-desc">What to build before Session 3. Priority implementations, practice prompts, and skill-building exercises.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slash Commands -->
+<section class="section" id="commands">
+  <div class="section-label">Part 1: The Basics</div>
+  <div class="section-title fade-in">Slash Commands You Need to Know</div>
+  <div class="section-sub fade-in">These are your daily drivers. Memorize these and you'll move 10x faster.</div>
+  <div class="cmd-grid fade-in">
+    <div class="cmd-card">
+      <div class="cmd-name">/init</div>
+      <div class="cmd-desc">Initialize a new project. Creates CLAUDE.md, sets up context structure, gets Claude oriented to your codebase.</div>
+      <div class="cmd-example">$ /init</div>
+      <div class="cmd-sosa">Use when: Starting any new SOSA project or tool</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/compact</div>
+      <div class="cmd-desc">Compress conversation history to free up context window. Essential for long sessions. Claude keeps the important stuff, drops the noise.</div>
+      <div class="cmd-example">$ /compact</div>
+      <div class="cmd-sosa">Use when: Claude starts forgetting things or slowing down</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/cost</div>
+      <div class="cmd-desc">Check how much this session has cost so far. Track your API usage and know when to compact.</div>
+      <div class="cmd-example">$ /cost</div>
+      <div class="cmd-sosa">Use when: Want to track spend on a project</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/clear</div>
+      <div class="cmd-desc">Start fresh. Wipes conversation history but keeps your CLAUDE.md context. Good for switching tasks.</div>
+      <div class="cmd-example">$ /clear</div>
+      <div class="cmd-sosa">Use when: Switching from content work to operations</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/help</div>
+      <div class="cmd-desc">See all available commands and how to use them. Your quick reference when you forget a command.</div>
+      <div class="cmd-example">$ /help</div>
+      <div class="cmd-sosa">Use when: Can't remember a command name</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/model</div>
+      <div class="cmd-desc">Switch between Claude models. Opus for complex strategy, Sonnet for fast coding, Haiku for quick tasks.</div>
+      <div class="cmd-example">$ /model sonnet</div>
+      <div class="cmd-sosa">Use when: Simple tasks don't need the biggest model</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/vim</div>
+      <div class="cmd-desc">Toggle vim mode for keyboard-driven editing. For power users who want to move faster in the terminal.</div>
+      <div class="cmd-example">$ /vim</div>
+      <div class="cmd-sosa">Use when: You're comfortable with terminal workflow</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/permissions</div>
+      <div class="cmd-desc">Control what Claude can do automatically vs. what needs your approval. Set trust levels for different actions.</div>
+      <div class="cmd-example">$ /permissions</div>
+      <div class="cmd-sosa">Use when: Setting up a new workspace</div>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/doctor</div>
+      <div class="cmd-desc">Diagnose issues with your Claude Code setup. Checks API keys, permissions, and configuration.</div>
+      <div class="cmd-example">$ /doctor</div>
+      <div class="cmd-sosa">Use when: Something isn't working right</div>
+    </div>
+  </div>
+</section>
+
+<!-- Custom Skills -->
+<section class="section skill-section" id="skills">
+  <div class="section-label">Part 2: The Real Power</div>
+  <div class="section-title fade-in">Custom Skills: Your AI Automations</div>
+  <div class="section-sub fade-in">Skills are reusable prompts that run entire workflows with one command. This is where Claude Code goes from assistant to operations team.</div>
+
+  <div style="background:white;border-radius:16px;border:1px solid var(--gray-200);padding:32px;margin-top:32px;" class="fade-in">
+    <div style="font-size:14px;font-weight:700;color:var(--green);margin-bottom:16px;">HOW SKILLS WORK</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;">
+      <div>
+        <div style="font-size:36px;margin-bottom:8px;">1</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Create a .md File</div>
+        <div style="font-size:13px;color:var(--gray-500);">Write instructions in a markdown file inside .claude/commands/</div>
+      </div>
+      <div>
+        <div style="font-size:36px;margin-bottom:8px;">2</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Define the Prompt</div>
+        <div style="font-size:13px;color:var(--gray-500);">Tell Claude exactly what to do, what context to read, and what to output</div>
+      </div>
+      <div>
+        <div style="font-size:36px;margin-bottom:8px;">3</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Run with /command</div>
+        <div style="font-size:13px;color:var(--gray-500);">Type /your-skill-name and Claude executes the entire workflow</div>
+      </div>
+      <div>
+        <div style="font-size:36px;margin-bottom:8px;">4</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Iterate + Improve</div>
+        <div style="font-size:13px;color:var(--gray-500);">Refine the skill based on results. Skills get better the more you use them</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="skill-grid fade-in" style="margin-top:24px;">
+    <div class="skill-card">
+      <h3>Expedition Email Writer</h3>
+      <p>One command generates a complete post-expedition email sequence customized per trip destination, with personalized impact metrics and next-trip teasers.</p>
+      <div class="skill-label">Skill File: .claude/commands/expedition-email.md</div>
+      <div class="skill-file"># Expedition Email Writer
+
+Read context/expeditions.md for trip details.
+Read context/partners.md for NGO impact data.
+
+Generate a 5-email post-expedition drip:
+1. Welcome home (send immediately)
+2. Photo gallery (day 3)
+3. Impact report with real numbers (day 7)
+4. Next trip early access (day 14)
+5. Alliance membership invite (day 30)
+
+Use Blake's voice. Authentic, not salesy.
+Include specific impact metrics per partner.</div>
+      <div class="topic-tags"><span class="topic-tag sosa">Expeditions</span><span class="topic-tag sosa">Email</span></div>
+    </div>
+
+    <div class="skill-card">
+      <h3>Content Repurposer</h3>
+      <p>Takes one piece of long-form content (expedition vlog, podcast episode, blog post) and generates versions for every platform.</p>
+      <div class="skill-label">Skill File: .claude/commands/repurpose.md</div>
+      <div class="skill-file"># Content Repurposer
+
+Input: $ARGUMENTS (paste transcript or content)
+
+Generate for each platform:
+- Instagram caption (max 2200 chars, 5-10 hashtags)
+- TikTok script (60 sec hook + story)
+- Twitter thread (5-7 tweets)
+- LinkedIn post (professional angle)
+- Blog post (800-1200 words, SEO optimized)
+- YouTube description + timestamps
+- Newsletter snippet (200 words)
+
+Match SOSA's voice: urgent but warm,
+mission-driven, never preachy.</div>
+      <div class="topic-tags"><span class="topic-tag video">Content</span><span class="topic-tag all">All Platforms</span></div>
+    </div>
+
+    <div class="skill-card">
+      <h3>Blog Post Generator</h3>
+      <p>Transforms field notes, expedition journals, or interview transcripts into SEO-optimized blog posts for the SOSA Adventures blog.</p>
+      <div class="skill-label">Skill File: .claude/commands/blog.md</div>
+      <div class="skill-file"># SOSA Blog Writer
+
+Input: $ARGUMENTS (field notes or transcript)
+
+Write a 1000-1500 word blog post for
+thesosa.com/blogs/sosa-adventures
+
+Include:
+- Compelling headline (under 70 chars)
+- Hook paragraph that pulls readers in
+- 3-5 subheadings for scannability
+- Specific details (species names, locations)
+- Call to action (expedition booking or merch)
+- SEO keywords naturally woven in
+
+Tone: first-person Blake voice.
+Raw and real, not polished corporate.</div>
+      <div class="topic-tags"><span class="topic-tag sosa">Blog</span><span class="topic-tag all">SEO</span></div>
+    </div>
+
+    <div class="skill-card video-skill">
+      <h3>Video Show Notes Generator</h3>
+      <p>Takes a video transcript and generates complete show notes, timestamps, key quotes, and social clips list for the video team.</p>
+      <div class="skill-label">Skill File: .claude/commands/show-notes.md</div>
+      <div class="skill-file"># Video Show Notes
+
+Input: $ARGUMENTS (paste transcript)
+
+Generate:
+1. Episode summary (3 sentences)
+2. Timestamps with descriptions
+3. Top 5 quotable moments (exact quotes)
+4. Suggested clip timestamps for Reels/TikTok
+5. SEO-optimized YouTube title + description
+6. 10 relevant tags
+7. Thumbnail text suggestions (3 options)
+
+Format for easy copy-paste into YouTube
+Studio and social scheduling tools.</div>
+      <div class="topic-tags"><span class="topic-tag video">Video</span><span class="topic-tag video">Podcast</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Video/Content Team Section -->
+<section class="section video-section" id="video">
+  <div class="section-label">Part 4: For the Videographer</div>
+  <div class="section-title fade-in">Video + Content Production Pipeline</div>
+  <div class="section-sub fade-in">Everything the video team can automate with Claude Code. From raw footage to published content.</div>
+
+  <div style="background:var(--off-white);border-radius:16px;padding:32px;margin-top:32px;margin-bottom:24px;" class="fade-in">
+    <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:16px;">THE CONTENT PIPELINE</div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="background:white;padding:14px 20px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid var(--gray-200);">Raw Footage</div>
+      <div style="color:var(--gray-400);">&rarr;</div>
+      <div style="background:white;padding:14px 20px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid var(--gray-200);">Transcribe (Whisper)</div>
+      <div style="color:var(--gray-400);">&rarr;</div>
+      <div style="background:white;padding:14px 20px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid var(--gray-200);">AI Show Notes</div>
+      <div style="color:var(--gray-400);">&rarr;</div>
+      <div style="background:white;padding:14px 20px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid var(--gray-200);">Clip Suggestions</div>
+      <div style="color:var(--gray-400);">&rarr;</div>
+      <div style="background:white;padding:14px 20px;border-radius:10px;font-size:13px;font-weight:600;border:1px solid var(--gray-200);">Multi-Platform Posts</div>
+      <div style="color:var(--gray-400);">&rarr;</div>
+      <div style="background:var(--green);padding:14px 20px;border-radius:10px;font-size:13px;font-weight:700;color:white;">Published</div>
+    </div>
+  </div>
+
+  <div class="video-grid fade-in">
+    <div class="video-card">
+      <h4>Transcription with Whisper</h4>
+      <p>Transcribe any video or audio file locally using OpenAI's Whisper model. Free, unlimited, runs on your machine. Always use "medium" model for accuracy.</p>
+      <div class="video-tool">whisper video.mp4 --model medium</div>
+    </div>
+    <div class="video-card">
+      <h4>Auto-Generate Timestamps</h4>
+      <p>Feed a transcript to Claude and get clean timestamps for YouTube descriptions. Identifies topic changes, key moments, and natural break points.</p>
+      <div class="video-tool">/show-notes [paste transcript]</div>
+    </div>
+    <div class="video-card">
+      <h4>Clip Identification for Reels</h4>
+      <p>Claude reads the transcript and flags the most shareable 30-60 second segments. Looks for emotional moments, surprising facts, and quotable lines.</p>
+      <div class="video-tool">Automated via show-notes skill</div>
+    </div>
+    <div class="video-card">
+      <h4>FFmpeg Audio Mixing</h4>
+      <p>Add background music to videos with proper volume fading. Claude generates the exact FFmpeg command for your audio specs. No editing software needed.</p>
+      <div class="video-tool">ffmpeg -i video.mp4 -i music.mp3 ...</div>
+    </div>
+    <div class="video-card">
+      <h4>Batch Caption Generation</h4>
+      <p>Generate Instagram captions, TikTok scripts, and Twitter threads from a single transcript. One input, seven platform outputs.</p>
+      <div class="video-tool">/repurpose [paste transcript]</div>
+    </div>
+    <div class="video-card">
+      <h4>Content Calendar Planning</h4>
+      <p>AI plans your posting schedule based on expedition dates, awareness days, and optimal engagement times. Fills gaps automatically.</p>
+      <div class="video-tool">/content-calendar [month]</div>
+    </div>
+    <div class="video-card">
+      <h4>SEO Title + Description Writer</h4>
+      <p>Claude generates YouTube titles optimized for search, plus full descriptions with keywords, links, and calls to action. A/B test options included.</p>
+      <div class="video-tool">/youtube-seo [topic]</div>
+    </div>
+    <div class="video-card">
+      <h4>Podcast Production</h4>
+      <p>"Boots on the Ground" podcast pipeline: transcribe, generate show notes, create audiograms, write newsletter summaries, suggest guests.</p>
+      <div class="video-tool">/podcast-pipeline [episode file]</div>
+    </div>
+    <div class="video-card">
+      <h4>Thumbnail Text Generator</h4>
+      <p>3 thumbnail text options per video, optimized for click-through rate. Short, punchy, curiosity-driven. Based on what performs in the conservation niche.</p>
+      <div class="video-tool">Included in show-notes output</div>
+    </div>
+  </div>
+</section>
+
+<!-- Deep Dive Topics -->
+<section class="section" id="topics" style="background:var(--off-white);">
+  <div class="section-label">Part 3 + 5: Deep Dives</div>
+  <div class="section-title fade-in">Teaching Topics</div>
+  <div class="section-sub fade-in">The concepts behind the tools. Understanding these makes everything else click.</div>
+  <div class="topic-grid fade-in">
+    <div class="topic-card">
+      <div class="topic-img" style="background-image:url(https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&h=400&fit=crop);">
+        <div class="topic-num">1</div>
+        <div class="topic-duration">20 min</div>
+      </div>
+      <div class="topic-body">
+        <h3>CLAUDE.md: Your AI's Brain</h3>
+        <p>The CLAUDE.md file is the single most important file in your workspace. It tells Claude who you are, what you do, and how to help. Structure it right and Claude remembers everything session to session.</p>
+        <div class="topic-tags"><span class="topic-tag all">Foundation</span><span class="topic-tag sosa">All Team</span></div>
+      </div>
+    </div>
+    <div class="topic-card">
+      <div class="topic-img" style="background-image:url(https://images.unsplash.com/photo-1484406566174-9da000fda645?w=600&h=400&fit=crop);">
+        <div class="topic-num">2</div>
+        <div class="topic-duration">15 min</div>
+      </div>
+      <div class="topic-body">
+        <h3>Context Files: Feeding Claude Your World</h3>
+        <p>How to organize business info, partner details, brand voice, and operational data so Claude can reference it instantly. The difference between good context and great context.</p>
+        <div class="topic-tags"><span class="topic-tag all">Foundation</span><span class="topic-tag sosa">Operations</span></div>
+      </div>
+    </div>
+    <div class="topic-card">
+      <div class="topic-img" style="background-image:url(https://images.unsplash.com/photo-1549366021-9f761d450615?w=600&h=400&fit=crop);">
+        <div class="topic-num">3</div>
+        <div class="topic-duration">30 min</div>
+      </div>
+      <div class="topic-body">
+        <h3>Building Skills from Scratch</h3>
+        <p>Live build session. We'll create 2-3 custom skills for SOSA together: an expedition email writer, a content repurposer, and a blog generator. You'll see the full process from idea to working command.</p>
+        <div class="topic-tags"><span class="topic-tag sosa">Hands-On</span><span class="topic-tag sosa">Live Build</span></div>
+      </div>
+    </div>
+    <div class="topic-card">
+      <div class="topic-img" style="background-image:url(https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&h=400&fit=crop);">
+        <div class="topic-num">4</div>
+        <div class="topic-duration">20 min</div>
+      </div>
+      <div class="topic-body">
+        <h3>The DM Bot: From Demo to Production</h3>
+        <p>How the Instagram DM funnel bot works, how to set it up with ManyChat or a custom build, and how to train it on SOSA's specific expedition details and FAQs.</p>
+        <div class="topic-tags"><span class="topic-tag sosa">Instagram</span><span class="topic-tag sosa">Revenue</span></div>
+      </div>
+    </div>
+    <div class="topic-card">
+      <div class="topic-img" style="background-image:url(https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=600&h=400&fit=crop);">
+        <div class="topic-num">5</div>
+        <div class="topic-duration">15 min</div>
+      </div>
+      <div class="topic-body">
+        <h3>Email Automation: The 60% Play</h3>
+        <p>60% of expedition participants come back. This is the system that makes that happen automatically. Post-trip nurture sequences, alumni engagement, and early-access funnels.</p>
+        <div class="topic-tags"><span class="topic-tag sosa">Email</span><span class="topic-tag sosa">Retention</span></div>
+      </div>
+    </div>
+    <div class="topic-card">
+      <div class="topic-img" style="background-image:url(https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop);">
+        <div class="topic-num">6</div>
+        <div class="topic-duration">20 min</div>
+      </div>
+      <div class="topic-body">
+        <h3>Content Pipeline: One Shoot, Seven Outputs</h3>
+        <p>The videographer's secret weapon. How to take one expedition shoot and automatically generate content for Instagram, TikTok, YouTube, Twitter, LinkedIn, blog, and email. End to end.</p>
+        <div class="topic-tags"><span class="topic-tag video">Video Team</span><span class="topic-tag video">Content</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Homework / Next Steps -->
+<section class="section" id="homework">
+  <div class="section-label">Part 6: After Tonight</div>
+  <div class="section-title fade-in">Homework Before Session 3</div>
+  <div class="section-sub fade-in">Practice these between now and next session. Each one builds muscle memory with Claude Code.</div>
+  <div class="checklist fade-in">
+    <div class="check-item">
+      <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
+      <div>
+        <div class="check-text">Build one custom skill on your own</div>
+        <div class="check-sub">Pick any workflow you repeat. Write the .md file, test it, iterate. Doesn't need to be perfect.</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
+      <div>
+        <div class="check-text">Expand your CLAUDE.md with expedition details</div>
+        <div class="check-sub">Add partner NGO details, trip pricing, team info, brand voice guidelines. The more context, the better the outputs.</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
+      <div>
+        <div class="check-text">Transcribe one expedition video with Whisper</div>
+        <div class="check-sub">Run: whisper your-video.mp4 --model medium. Then feed the transcript to the /repurpose skill.</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
+      <div>
+        <div class="check-text">Generate one blog post from field notes</div>
+        <div class="check-sub">Take any expedition journal entry or notes and run the /blog skill. Edit the output to match Blake's voice exactly.</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
+      <div>
+        <div class="check-text">Test 10 different prompts with the DM bot concept</div>
+        <div class="check-sub">Think about what followers actually ask. Test edge cases. What happens when someone asks about safety? Pricing? Accessibility?</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
+      <div>
+        <div class="check-text">Draft a post-expedition email sequence for one trip</div>
+        <div class="check-sub">Pick South Africa or Bahamas. Write all 5 emails. Use the drip demo in the audit dashboard as a starting point.</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
+      <div>
+        <div class="check-text">Explore MCP servers (advanced)</div>
+        <div class="check-sub">MCP lets Claude Code connect to external tools (Google Calendar, Slack, Shopify). Research which ones could help SOSA.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Let's Build</h2>
+  <p>Open Claude Code and follow along. Everything we cover tonight, you'll do hands-on.</p>
+  <a href="index.html" class="cta-btn">View AI Audit Dashboard</a>
+</section>
+
+<div style="text-align:center;padding:32px;font-size:12px;color:var(--gray-400);">
+  Built with Claude Code &mdash; SOSA AI Implementation, Session 2
+</div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.id; });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
