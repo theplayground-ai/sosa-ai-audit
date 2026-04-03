@@ -1166,6 +1166,7 @@
                 </div>
                 <div id="calDetailTypeBadge" style="padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:0.5px;"></div>
               </div>
+              <div id="calDetailImg" style="width:100%;height:180px;border-radius:10px;margin-bottom:16px;background-size:cover;background-position:center;display:none;"></div>
               <div id="calDetailPlatforms" style="display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;"></div>
               <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--sosa-gray-400);margin-bottom:8px;">AI-Generated Caption</div>
               <div id="calDetailCaption" style="font-size:14px;line-height:1.7;color:var(--sosa-dark);background:white;padding:16px;border-radius:10px;border:1px solid var(--sosa-gray-200);"></div>
@@ -1190,7 +1191,7 @@
     </div>
 
     <!-- Impact Dashboard (Interactive) -->
-    <div class="demo-card">
+    <div class="demo-card demo-full">
       <div class="demo-header">
         <h3>Conservation Impact Dashboard</h3>
         <div class="demo-live-tag"><div class="demo-live-dot"></div>Live Demo</div>
@@ -1633,25 +1634,25 @@ function renderImpactView(view) {
       el.querySelectorAll('.anim-bar').forEach(function(bar) { bar.style.width = bar.dataset.w; });
     }, 100);
   } else if (view === 'species') {
-    el.innerHTML = '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">' +
-      speciesCard('White Rhinoceros','Near Threatened','Care for Wild, South Africa','500+ orphans rescued and rehabilitated','85%') +
-      speciesCard('Hammerhead Shark','Critically Endangered','Saving the Blue, Bahamas','14+ tagged per expedition for population studies','72%') +
-      speciesCard('Spider Monkey','Vulnerable','ONCA, Bolivia','Rehabilitation from illegal wildlife trade','60%') +
-      speciesCard('Brown Bear','Least Concern','Field Researchers, Alaska','Population surveys and behavioral monitoring','90%') +
-      speciesCard('Leatherback Sea Turtle','Vulnerable','Partners, Costa Rica','Nest protection and hatchling tracking','65%') +
-      speciesCard('African Elephant','Endangered','Big Life Foundation, Kenya','Anti-poaching patrols and corridor protection','78%') +
+    el.innerHTML = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">' +
+      speciesCard('White Rhinoceros','Near Threatened','Care for Wild, South Africa','500+ orphans rescued and rehabilitated','85%','https://images.unsplash.com/photo-1535338454528-1b3f0ff1a809?w=400&h=250&fit=crop') +
+      speciesCard('Hammerhead Shark','Critically Endangered','Saving the Blue, Bahamas','14+ tagged per expedition for population studies','72%','https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=250&fit=crop') +
+      speciesCard('Spider Monkey','Vulnerable','ONCA, Bolivia','Rehabilitation from illegal wildlife trade','60%','https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=400&h=250&fit=crop') +
+      speciesCard('Brown Bear','Least Concern','Field Researchers, Alaska','Population surveys and behavioral monitoring','90%','https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=400&h=250&fit=crop') +
+      speciesCard('Leatherback Sea Turtle','Vulnerable','Partners, Costa Rica','Nest protection and hatchling tracking','65%','https://images.unsplash.com/photo-1591025207163-942350e47db2?w=400&h=250&fit=crop') +
+      speciesCard('African Elephant','Endangered','Big Life Foundation, Kenya','Anti-poaching patrols and corridor protection','78%','https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=400&h=250&fit=crop') +
       '</div>';
     setTimeout(function() {
       el.querySelectorAll('.sp-bar').forEach(function(bar) { bar.style.width = bar.dataset.w; });
     }, 100);
   } else if (view === 'expeditions') {
-    el.innerHTML = '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">' +
-      expCard('South Africa','Rhino Sanctuary + Anti-Poaching','Care for Wild, GCF','12 trips completed','var(--sosa-green)') +
-      expCard('Bahamas','Shark Research Intensive','Saving the Blue','8 trips completed','var(--sosa-blue)') +
-      expCard('Bolivia','Primate Rehabilitation','ONCA Wildlife Rescue','6 trips completed','var(--sosa-accent)') +
-      expCard('Costa Rica','Rainforest Conservation','Local Partners','5 trips completed','var(--sosa-green)') +
-      expCard('Alaska','Brown Bear Research','Field Researchers','4 trips completed','var(--sosa-teal)') +
-      expCard('Kenya','Wildlife Anti-Poaching','Big Life Foundation','3 trips completed','var(--sosa-accent)') +
+    el.innerHTML = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">' +
+      expCard('South Africa','Rhino Sanctuary + Anti-Poaching','Care for Wild, GCF','12 trips completed','var(--sosa-green)','https://images.unsplash.com/photo-1516426122078-c23e76319801?w=400&h=200&fit=crop') +
+      expCard('Bahamas','Shark Research Intensive','Saving the Blue','8 trips completed','var(--sosa-blue)','https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=400&h=200&fit=crop') +
+      expCard('Bolivia','Primate Rehabilitation','ONCA Wildlife Rescue','6 trips completed','var(--sosa-accent)','https://images.unsplash.com/photo-1463852247062-1bbca38f7805?w=400&h=200&fit=crop') +
+      expCard('Costa Rica','Rainforest Conservation','Local Partners','5 trips completed','var(--sosa-green)','https://images.unsplash.com/photo-1518182170546-07661fd94144?w=400&h=200&fit=crop') +
+      expCard('Alaska','Brown Bear Research','Field Researchers','4 trips completed','var(--sosa-teal)','https://images.unsplash.com/photo-1525382455947-f319bc05fb35?w=400&h=200&fit=crop') +
+      expCard('Kenya','Wildlife Anti-Poaching','Big Life Foundation','3 trips completed','var(--sosa-accent)','https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=400&h=200&fit=crop') +
       '</div>' +
       '<div style="background:var(--sosa-gray-100);border-radius:12px;padding:20px;margin-top:12px;text-align:center;">' +
         '<div style="font-size:13px;color:var(--sosa-gray-500);font-weight:600;">60% of participants return for another expedition</div>' +
@@ -1676,21 +1677,27 @@ function renderImpactView(view) {
   }
 }
 
-function speciesCard(name, status, partner, impact, prog) {
+function speciesCard(name, status, partner, impact, prog, img) {
   var statusColor = status.includes('Critically') ? 'var(--sosa-red)' : status.includes('Endangered') ? 'var(--sosa-orange)' : status.includes('Vulnerable') ? 'var(--sosa-accent)' : 'var(--sosa-green)';
-  return '<div style="background:var(--sosa-gray-100);border-radius:12px;padding:20px;">' +
-    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="font-size:16px;font-weight:700;">' + name + '</span><span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;background:' + statusColor + ';color:white;">' + status + '</span></div>' +
+  return '<div style="background:var(--sosa-gray-100);border-radius:12px;overflow:hidden;">' +
+    '<div style="width:100%;height:160px;background:url(' + img + ') center/cover no-repeat;position:relative;">' +
+      '<span style="position:absolute;top:10px;right:10px;font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;background:' + statusColor + ';color:white;">' + status + '</span>' +
+    '</div>' +
+    '<div style="padding:16px 20px;">' +
+    '<div style="font-size:16px;font-weight:700;margin-bottom:4px;">' + name + '</div>' +
     '<div style="font-size:12px;color:var(--sosa-gray-500);margin-bottom:4px;">' + partner + '</div>' +
-    '<div style="font-size:13px;color:var(--sosa-dark);margin-bottom:10px;">' + impact + '</div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="font-size:11px;color:var(--sosa-gray-400);width:80px;">Protection</div><div style="flex:1;height:6px;background:var(--sosa-gray-200);border-radius:100px;overflow:hidden;"><div class="sp-bar anim-bar" data-w="' + prog + '" style="height:100%;border-radius:100px;background:' + statusColor + ';width:0%;transition:width 1.5s ease-out;"></div></div><div style="font-size:11px;font-weight:700;">' + prog + '</div></div></div>';
+    '<div style="font-size:13px;color:var(--sosa-dark);margin-bottom:12px;">' + impact + '</div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="font-size:11px;color:var(--sosa-gray-400);width:80px;">Protection</div><div style="flex:1;height:6px;background:var(--sosa-gray-200);border-radius:100px;overflow:hidden;"><div class="sp-bar anim-bar" data-w="' + prog + '" style="height:100%;border-radius:100px;background:' + statusColor + ';width:0%;transition:width 1.5s ease-out;"></div></div><div style="font-size:11px;font-weight:700;">' + prog + '</div></div></div></div>';
 }
 
-function expCard(location, focus, partner, count, color) {
-  return '<div style="background:var(--sosa-gray-100);border-radius:12px;padding:20px;border-left:4px solid ' + color + ';">' +
+function expCard(location, focus, partner, count, color, img) {
+  return '<div style="background:var(--sosa-gray-100);border-radius:12px;overflow:hidden;border-left:4px solid ' + color + ';">' +
+    '<div style="width:100%;height:140px;background:url(' + img + ') center/cover no-repeat;"></div>' +
+    '<div style="padding:16px 20px;">' +
     '<div style="font-size:16px;font-weight:700;margin-bottom:4px;">' + location + '</div>' +
     '<div style="font-size:13px;color:var(--sosa-gray-500);margin-bottom:2px;">' + focus + '</div>' +
     '<div style="font-size:12px;color:var(--sosa-gray-400);margin-bottom:8px;">' + partner + '</div>' +
-    '<div style="font-size:12px;font-weight:700;color:var(--sosa-green);">' + count + '</div></div>';
+    '<div style="font-size:12px;font-weight:700;color:var(--sosa-green);">' + count + '</div></div></div>';
 }
 
 function fundCard(source, desc, amount, pct) {
@@ -1711,24 +1718,24 @@ const monthNames = ['January','February','March','April','May','June','July','Au
 
 const allContentPlans = {
   '2026-3': { // April
-    1:  {type:'green',label:'BTS: Costa Rica Prep Day',format:'Reel',platforms:['Instagram','TikTok'],time:'11:00 AM EST',reach:'18K-24K',caption:'Packing for 7 days in the Costa Rican rainforest hits different when your "gear list" includes research equipment and rubber boots. Getting ready to lead our next group of conservation volunteers into the jungle. This isn\'t a vacation. This is the real thing. #SOSA #ConservationExpedition #CostaRica'},
-    3:  {type:'blue',label:'Shark Conservation Reel',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'2:00 PM EST',reach:'22K-35K',caption:'Most people fear sharks. We study them. Last year in the Bahamas, our team helped tag 14 Caribbean reef sharks for long-term population monitoring with Saving the Blue. Every data point matters when you\'re fighting to protect a species that\'s been here for 400 million years. #SharkConservation #SavingTheBlue'},
-    5:  {type:'green',label:'Expedition Highlight Reel',format:'Reel',platforms:['Instagram','YouTube Shorts'],time:'12:00 PM EST',reach:'30K-45K',caption:'60% of the people who come on a SOSA expedition come back for another one. This is why. There\'s nothing like standing 10 feet from a white rhino you just helped collar, knowing that data will protect her herd for years. Conservation changes you. #SOSA #WildlifeConservation'},
-    7:  {type:'gold',label:'New Merch Drop: Sea Turtle Tee',format:'Carousel',platforms:['Instagram','Facebook'],time:'10:00 AM EST',reach:'12K-18K',caption:'NEW DROP: The Hawksbill Collection. Every piece tells the story of a critically endangered species. Every $100+ purchase goes directly to our Alliance Allocation Fund supporting frontline conservation NGOs. Wear the mission. Link in bio. #SOSAmerch #ConservationFashion'},
-    8:  {type:'blue',label:'IUCN Red List Education Post',format:'Carousel',platforms:['Instagram','LinkedIn','Twitter'],time:'9:00 AM EST',reach:'15K-20K',caption:'The IUCN Red List isn\'t just a list. It\'s a countdown. Right now, over 44,000 species are threatened with extinction. That\'s not a distant problem. That\'s happening on our watch. Swipe to see which species we\'re working to protect and what you can do today. #IUCNRedList #Extinction'},
-    10: {type:'green',label:'Alumni Spotlight: Sarah\'s Story',format:'Carousel',platforms:['Instagram','Facebook','LinkedIn'],time:'11:00 AM EST',reach:'14K-20K',caption:'Sarah came to South Africa as a graphic designer who "just wanted to see elephants." She left as a certified volunteer ranger who now fundraises for Care for Wild every quarter. This is what happens when conservation becomes personal. Full story in carousel. #SOSAalumni'},
-    12: {type:'green',label:'Expedition Testimonial Carousel',format:'Carousel',platforms:['Instagram'],time:'1:00 PM EST',reach:'10K-16K',caption:'"I thought I was going on a trip. I came back with a purpose." Real words from real people who\'ve walked alongside anti-poaching rangers, tagged sharks, and rehabilitated primates with SOSA. Swipe for testimonials. Next trip: Costa Rica. Link in bio.'},
-    14: {type:'blue',label:'Anti-Poaching Awareness Day',format:'Reel + Story Series',platforms:['Instagram','TikTok','YouTube Shorts','Twitter'],time:'8:00 AM EST',reach:'40K-65K',caption:'I spent 3 weeks training alongside anti-poaching rangers in South Africa. The things I saw changed everything I thought I knew about conservation. These men and women risk their lives every single night so that species like the black rhino still exist tomorrow. Today we honor them. #AntiPoaching'},
-    15: {type:'gold',label:'Affiliate: Baffin Boots Field Test',format:'Reel',platforms:['Instagram','TikTok'],time:'3:00 PM EST',reach:'16K-22K',caption:'Field tested in the Bolivian Amazon. River crossings, jungle treks, and 14-hour days in the mud. These Baffin boots didn\'t just survive, they thrived. Code SOSA15 for 15% off if you\'re gearing up for your own adventure. #BaffinAmbassador #FieldTested'},
-    17: {type:'green',label:'Alaska Expedition Teaser',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'12:00 PM EST',reach:'25K-40K',caption:'ALASKA 2026. Brown bear camping in Katmai. Waking up to grizzlies fishing for salmon. Working with local researchers on population surveys. This is not a zoo. This is not a tour. This is SOSA. Limited spots. Applications open now. Link in bio. #AlaskaExpedition #BrownBears'},
-    19: {type:'blue',label:'Rhino Conservation Update',format:'Carousel',platforms:['Instagram','LinkedIn','Twitter'],time:'10:00 AM EST',reach:'18K-28K',caption:'Update from the field: Care for Wild just rescued their 500th orphaned rhino. 500 babies who lost their mothers to poaching, now being raised by hand to one day return to the wild. SOSA has been there since day one. Here\'s where things stand now. #RhinoConservation #CareForWild'},
-    21: {type:'green',label:'Costa Rica Countdown: 2 Weeks',format:'Story Series + Post',platforms:['Instagram','Facebook'],time:'11:00 AM EST',reach:'20K-30K',caption:'2 WEEKS until our Costa Rica rainforest expedition. Sea turtles. Howler monkeys. Dense jungle. 7 days of hands-on conservation with a small crew of people who actually care. A few spots left. If this is calling you, don\'t wait. Link in bio. #CostaRica #SOSA2026'},
-    22: {type:'gold',label:'Merch Restock Announcement',format:'Story + Post',platforms:['Instagram'],time:'10:00 AM EST',reach:'8K-12K',caption:'RESTOCKED. The Sun Flex Hoodie and Camper Cap are back. These sold out in 72 hours last time. Conservation gear that actually looks good and funds the mission. Shop now, link in bio.'},
-    24: {type:'blue',label:'Partner Spotlight: Care for Wild',format:'Carousel',platforms:['Instagram','LinkedIn','Facebook'],time:'9:00 AM EST',reach:'16K-24K',caption:'PARTNER SPOTLIGHT: Care for Wild is the world\'s largest rhino sanctuary, and one of SOSA\'s founding partners. Every expedition we run to South Africa puts volunteers directly in their facility, working alongside their incredible team. Here\'s what they do and why it matters.'},
-    26: {type:'green',label:'Packing List for Costa Rica',format:'Carousel',platforms:['Instagram','TikTok'],time:'2:00 PM EST',reach:'12K-18K',caption:'What to pack for 7 days in the Costa Rican rainforest (conservation edition). This isn\'t your typical travel packing list. Rubber boots, headlamps, quick-dry everything, and zero expectations of cell service. Save this for when you book your spot. #PackingList #CostaRica'},
-    28: {type:'gold',label:'Affiliate: Fahlo Tracking Bracelet',format:'Reel',platforms:['Instagram','TikTok'],time:'1:00 PM EST',reach:'14K-20K',caption:'Every Fahlo bracelet tracks a real animal in the wild. I\'ve worn mine through 6 countries and 3 continents of conservation work. Code BLAKE20 for 20% off. Track a shark, a rhino, or an elephant. Know exactly where they are, in real time. #Fahlo #WildlifeTracking'},
-    29: {type:'blue',label:'Bolivia ONCA Monkey Rehab',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'11:00 AM EST',reach:'20K-32K',caption:'In the Bolivian Amazon, ONCA Wildlife Rescue rehabilitates spider monkeys, capuchins, and squirrel monkeys seized from illegal wildlife trade. Our volunteers feed them, build enrichment activities, and help prepare them for release. This is conservation at its most personal.'},
-    30: {type:'green',label:'Trip Launch: Maldives Early Access',format:'Carousel + Reel',platforms:['Instagram','Facebook','Twitter','Email'],time:'9:00 AM EST',reach:'35K-50K',caption:'JUST ANNOUNCED: Maldives 2026. Shark research expedition with Miyaru. Snorkel alongside whale sharks, help tag reef sharks, and contribute to groundbreaking marine conservation data. Alumni get 48-hour early access starting NOW. Public launch Friday. #Maldives #SOSA2026'},
+    1:  {type:'green',label:'BTS: Costa Rica Prep Day',format:'Reel',platforms:['Instagram','TikTok'],time:'11:00 AM EST',reach:'18K-24K',img:'https://images.unsplash.com/photo-1518182170546-07661fd94144?w=600&h=340&fit=crop',caption:'Packing for 7 days in the Costa Rican rainforest hits different when your "gear list" includes research equipment and rubber boots. Getting ready to lead our next group of conservation volunteers into the jungle. This isn\'t a vacation. This is the real thing. #SOSA #ConservationExpedition #CostaRica'},
+    3:  {type:'blue',label:'Shark Conservation Reel',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'2:00 PM EST',reach:'22K-35K',img:'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=340&fit=crop',caption:'Most people fear sharks. We study them. Last year in the Bahamas, our team helped tag 14 Caribbean reef sharks for long-term population monitoring with Saving the Blue. Every data point matters when you\'re fighting to protect a species that\'s been here for 400 million years. #SharkConservation #SavingTheBlue'},
+    5:  {type:'green',label:'Expedition Highlight Reel',format:'Reel',platforms:['Instagram','YouTube Shorts'],time:'12:00 PM EST',reach:'30K-45K',img:'https://images.unsplash.com/photo-1535338454528-1b3f0ff1a809?w=600&h=340&fit=crop',caption:'60% of the people who come on a SOSA expedition come back for another one. This is why. There\'s nothing like standing 10 feet from a white rhino you just helped collar, knowing that data will protect her herd for years. Conservation changes you. #SOSA #WildlifeConservation'},
+    7:  {type:'gold',label:'New Merch Drop: Sea Turtle Tee',format:'Carousel',platforms:['Instagram','Facebook'],time:'10:00 AM EST',reach:'12K-18K',img:'https://images.unsplash.com/photo-1591025207163-942350e47db2?w=600&h=340&fit=crop',caption:'NEW DROP: The Hawksbill Collection. Every piece tells the story of a critically endangered species. Every $100+ purchase goes directly to our Alliance Allocation Fund supporting frontline conservation NGOs. Wear the mission. Link in bio. #SOSAmerch #ConservationFashion'},
+    8:  {type:'blue',label:'IUCN Red List Education Post',format:'Carousel',platforms:['Instagram','LinkedIn','Twitter'],time:'9:00 AM EST',reach:'15K-20K',img:'https://images.unsplash.com/photo-1474511320723-9a56873571b7?w=600&h=340&fit=crop',caption:'The IUCN Red List isn\'t just a list. It\'s a countdown. Right now, over 44,000 species are threatened with extinction. That\'s not a distant problem. That\'s happening on our watch. Swipe to see which species we\'re working to protect and what you can do today. #IUCNRedList #Extinction'},
+    10: {type:'green',label:'Alumni Spotlight: Sarah\'s Story',format:'Carousel',platforms:['Instagram','Facebook','LinkedIn'],time:'11:00 AM EST',reach:'14K-20K',img:'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&h=340&fit=crop',caption:'Sarah came to South Africa as a graphic designer who "just wanted to see elephants." She left as a certified volunteer ranger who now fundraises for Care for Wild every quarter. This is what happens when conservation becomes personal. Full story in carousel. #SOSAalumni'},
+    12: {type:'green',label:'Expedition Testimonial Carousel',format:'Carousel',platforms:['Instagram'],time:'1:00 PM EST',reach:'10K-16K',img:'https://images.unsplash.com/photo-1504208434149-53980632dad5?w=600&h=340&fit=crop',caption:'"I thought I was going on a trip. I came back with a purpose." Real words from real people who\'ve walked alongside anti-poaching rangers, tagged sharks, and rehabilitated primates with SOSA. Swipe for testimonials. Next trip: Costa Rica. Link in bio.'},
+    14: {type:'blue',label:'Anti-Poaching Awareness Day',format:'Reel + Story Series',platforms:['Instagram','TikTok','YouTube Shorts','Twitter'],time:'8:00 AM EST',reach:'40K-65K',img:'https://images.unsplash.com/photo-1535083783855-76ae62b2914e?w=600&h=340&fit=crop',caption:'I spent 3 weeks training alongside anti-poaching rangers in South Africa. The things I saw changed everything I thought I knew about conservation. These men and women risk their lives every single night so that species like the black rhino still exist tomorrow. Today we honor them. #AntiPoaching'},
+    15: {type:'gold',label:'Affiliate: Baffin Boots Field Test',format:'Reel',platforms:['Instagram','TikTok'],time:'3:00 PM EST',reach:'16K-22K',img:'https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=340&fit=crop',caption:'Field tested in the Bolivian Amazon. River crossings, jungle treks, and 14-hour days in the mud. These Baffin boots didn\'t just survive, they thrived. Code SOSA15 for 15% off if you\'re gearing up for your own adventure. #BaffinAmbassador #FieldTested'},
+    17: {type:'green',label:'Alaska Expedition Teaser',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'12:00 PM EST',reach:'25K-40K',img:'https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=600&h=340&fit=crop',caption:'ALASKA 2026. Brown bear camping in Katmai. Waking up to grizzlies fishing for salmon. Working with local researchers on population surveys. This is not a zoo. This is not a tour. This is SOSA. Limited spots. Applications open now. Link in bio. #AlaskaExpedition #BrownBears'},
+    19: {type:'blue',label:'Rhino Conservation Update',format:'Carousel',platforms:['Instagram','LinkedIn','Twitter'],time:'10:00 AM EST',reach:'18K-28K',img:'https://images.unsplash.com/photo-1535338454528-1b3f0ff1a809?w=600&h=340&fit=crop',caption:'Update from the field: Care for Wild just rescued their 500th orphaned rhino. 500 babies who lost their mothers to poaching, now being raised by hand to one day return to the wild. SOSA has been there since day one. Here\'s where things stand now. #RhinoConservation #CareForWild'},
+    21: {type:'green',label:'Costa Rica Countdown: 2 Weeks',format:'Story Series + Post',platforms:['Instagram','Facebook'],time:'11:00 AM EST',reach:'20K-30K',img:'https://images.unsplash.com/photo-1497752531616-c3afd9760a11?w=600&h=340&fit=crop',caption:'2 WEEKS until our Costa Rica rainforest expedition. Sea turtles. Howler monkeys. Dense jungle. 7 days of hands-on conservation with a small crew of people who actually care. A few spots left. If this is calling you, don\'t wait. Link in bio. #CostaRica #SOSA2026'},
+    22: {type:'gold',label:'Merch Restock Announcement',format:'Story + Post',platforms:['Instagram'],time:'10:00 AM EST',reach:'8K-12K',img:'https://images.unsplash.com/photo-1556906781-9a412961c28c?w=600&h=340&fit=crop',caption:'RESTOCKED. The Sun Flex Hoodie and Camper Cap are back. These sold out in 72 hours last time. Conservation gear that actually looks good and funds the mission. Shop now, link in bio.'},
+    24: {type:'blue',label:'Partner Spotlight: Care for Wild',format:'Carousel',platforms:['Instagram','LinkedIn','Facebook'],time:'9:00 AM EST',reach:'16K-24K',img:'https://images.unsplash.com/photo-1574068468622-24e3c8568992?w=600&h=340&fit=crop',caption:'PARTNER SPOTLIGHT: Care for Wild is the world\'s largest rhino sanctuary, and one of SOSA\'s founding partners. Every expedition we run to South Africa puts volunteers directly in their facility, working alongside their incredible team. Here\'s what they do and why it matters.'},
+    26: {type:'green',label:'Packing List for Costa Rica',format:'Carousel',platforms:['Instagram','TikTok'],time:'2:00 PM EST',reach:'12K-18K',img:'https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=600&h=340&fit=crop',caption:'What to pack for 7 days in the Costa Rican rainforest (conservation edition). This isn\'t your typical travel packing list. Rubber boots, headlamps, quick-dry everything, and zero expectations of cell service. Save this for when you book your spot. #PackingList #CostaRica'},
+    28: {type:'gold',label:'Affiliate: Fahlo Tracking Bracelet',format:'Reel',platforms:['Instagram','TikTok'],time:'1:00 PM EST',reach:'14K-20K',img:'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=600&h=340&fit=crop',caption:'Every Fahlo bracelet tracks a real animal in the wild. I\'ve worn mine through 6 countries and 3 continents of conservation work. Code BLAKE20 for 20% off. Track a shark, a rhino, or an elephant. Know exactly where they are, in real time. #Fahlo #WildlifeTracking'},
+    29: {type:'blue',label:'Bolivia ONCA Monkey Rehab',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'11:00 AM EST',reach:'20K-32K',img:'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=600&h=340&fit=crop',caption:'In the Bolivian Amazon, ONCA Wildlife Rescue rehabilitates spider monkeys, capuchins, and squirrel monkeys seized from illegal wildlife trade. Our volunteers feed them, build enrichment activities, and help prepare them for release. This is conservation at its most personal.'},
+    30: {type:'green',label:'Trip Launch: Maldives Early Access',format:'Carousel + Reel',platforms:['Instagram','Facebook','Twitter','Email'],time:'9:00 AM EST',reach:'35K-50K',img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=340&fit=crop',caption:'JUST ANNOUNCED: Maldives 2026. Shark research expedition with Miyaru. Snorkel alongside whale sharks, help tag reef sharks, and contribute to groundbreaking marine conservation data. Alumni get 48-hour early access starting NOW. Public launch Friday. #Maldives #SOSA2026'},
   },
   '2026-4': { // May
     2:  {type:'green',label:'Costa Rica Expedition: Day 1',format:'Reel',platforms:['Instagram','TikTok'],time:'6:00 PM EST',reach:'35K-55K',caption:'WE\'RE HERE. Day 1 in the Costa Rican rainforest. Met the team, unpacked at the research station, and already spotted a toucan from the porch. Tomorrow we start sea turtle patrol. This crew is incredible. Follow along for the full 7 days. #CostaRica #SOSAexpedition'},
@@ -1826,6 +1833,14 @@ function selectCalDay(day) {
   badge.textContent = tc.label;
   badge.style.background = tc.bg;
   badge.style.color = tc.color;
+
+  var imgEl = document.getElementById('calDetailImg');
+  if (content.img) {
+    imgEl.style.backgroundImage = 'url(' + content.img + ')';
+    imgEl.style.display = 'block';
+  } else {
+    imgEl.style.display = 'none';
+  }
 
   const platEl = document.getElementById('calDetailPlatforms');
   platEl.innerHTML = content.platforms.map(function(p) {
