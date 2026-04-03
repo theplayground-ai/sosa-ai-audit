@@ -849,6 +849,20 @@
       </div>
     </div>
   </div>
+  <div style="margin-top:32px;background:white;border-radius:16px;border:1px solid var(--sosa-gray-200);padding:28px 32px;max-width:1400px;margin-left:auto;margin-right:auto;" class="fade-in">
+    <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--sosa-gray-400);margin-bottom:12px;">How We Scored This</div>
+    <div style="font-size:14px;line-height:1.8;color:var(--sosa-gray-500);">
+      These scores are based on a technical audit of SOSA's publicly visible infrastructure as of April 2026:
+      <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;">
+        <div><strong style="color:var(--sosa-dark);">Lead Capture + CRM (10%):</strong> Expedition interest goes through a Google Form with no automated follow-up, no lead scoring, and no CRM. The 10% reflects that the form exists, but there is zero automation behind it.</div>
+        <div><strong style="color:var(--sosa-dark);">Email Automation (5%):</strong> No visible email sequences, welcome flows, or drip campaigns. No newsletter signup on the website. The 5% accounts for basic Shopify order confirmation emails only.</div>
+        <div><strong style="color:var(--sosa-dark);">Content Workflow (30%):</strong> Strong content creation (Blake and team produce high-quality field footage and stories). The 30% reflects the human effort, but there is no AI-assisted scheduling, repurposing, or cross-platform automation.</div>
+        <div><strong style="color:var(--sosa-dark);">DM + Engagement (5%):</strong> With 451K followers on Blake's personal account and growing on @the.sosa, all DM responses are manual. No auto-responders, no comment-to-DM funnels, no chatbot. 5% for the human effort of responding.</div>
+        <div><strong style="color:var(--sosa-dark);">Booking + Ops (15%):</strong> Shopify handles merch transactions. Expedition booking is a Google Form with manual coordination. No automated scheduling, payment plans, or waitlist management. 15% for the Shopify layer.</div>
+        <div><strong style="color:var(--sosa-dark);">Community + Alumni (10%):</strong> The SOS Alliance page exists on the website but has no portal, no membership system, and no alumni engagement automation. 10% for the stated intent and the strong 60% return rate (proof the community wants to stay connected).</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- AI Opportunities -->
@@ -1092,10 +1106,10 @@
       </div>
       <div class="demo-body">
         <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
-          <button class="drip-trip-btn drip-trip-active" onclick="switchTrip('southafrica')">South Africa</button>
-          <button class="drip-trip-btn" onclick="switchTrip('costarica')">Costa Rica</button>
-          <button class="drip-trip-btn" onclick="switchTrip('bahamas')">Bahamas</button>
-          <button class="drip-trip-btn" onclick="switchTrip('alaska')">Alaska</button>
+          <button class="drip-trip-btn drip-trip-active" onclick="switchTrip('southafrica',this)">South Africa</button>
+          <button class="drip-trip-btn" onclick="switchTrip('costarica',this)">Costa Rica</button>
+          <button class="drip-trip-btn" onclick="switchTrip('bahamas',this)">Bahamas</button>
+          <button class="drip-trip-btn" onclick="switchTrip('alaska',this)">Alaska</button>
         </div>
         <div class="drip-timeline" id="dripTimeline"></div>
         <div id="dripEmailPreview" style="display:none;margin-top:20px;background:white;border:1px solid var(--sosa-gray-200);border-radius:12px;overflow:hidden;">
@@ -1183,10 +1197,10 @@
       </div>
       <div class="demo-body">
         <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
-          <button class="impact-view-btn impact-view-active" onclick="switchImpactView('overview')">Overview</button>
-          <button class="impact-view-btn" onclick="switchImpactView('species')">Species Protected</button>
-          <button class="impact-view-btn" onclick="switchImpactView('expeditions')">Expeditions</button>
-          <button class="impact-view-btn" onclick="switchImpactView('funding')">Funding</button>
+          <button class="impact-view-btn impact-view-active" onclick="switchImpactView('overview',this)">Overview</button>
+          <button class="impact-view-btn" onclick="switchImpactView('species',this)">Species Protected</button>
+          <button class="impact-view-btn" onclick="switchImpactView('expeditions',this)">Expeditions</button>
+          <button class="impact-view-btn" onclick="switchImpactView('funding',this)">Funding</button>
         </div>
         <div id="impactContent"></div>
       </div>
@@ -1394,6 +1408,18 @@ const botKnowledge = [
   {keys:['safe','danger','risk','scary','worried','concern','insurance'], resp:"Safety is our top priority. Every expedition is run with experienced local guides, vetted partner organizations, and established field protocols. Blake personally leads trips and has extensive field experience across Africa, Central America, the Caribbean, and more.\n\nFor wildlife interactions, we follow strict distance protocols established by our partner researchers. Anti-poaching training is observational for participants. Shark research follows scientific handling procedures developed over decades.\n\nWe recommend travel insurance for all participants and provide detailed safety briefings before every expedition."},
   // Conservation impact
   {keys:['impact','difference','change','help','contribute','donate','fund'], resp:"Here's what SOSA has achieved:\n\n- Multiple expeditions across 8+ countries\n- Hundreds of participants trained in field conservation\n- Direct funding to 12+ partner NGOs\n- Supported Care for Wild's 500th rhino rescue\n- David Suzuki Foundation campaign that raised over $1 million for boreal caribou\n- Thai zoo animal cruelty investigation with Lady Freethinker\n- Ongoing shark research data for Saving the Blue's long-term population studies\n\nEvery expedition fee and every $100+ merch purchase goes directly to these efforts. This isn't greenwashing. The money hits the ground."},
+  // Links and URLs
+  {keys:['link','url','website','send me','send link','where do i','how do i find','apply','sign up','application','form'], resp:'Absolutely! Here are the links you need:\n\n<a href="https://thesosa.com/pages/experiences" target="_blank" style="color:#c8a96e;font-weight:600;">All Expeditions + Apply</a>\n<a href="https://thesosa.com/collections/all" target="_blank" style="color:#c8a96e;font-weight:600;">Shop SOSA Merch</a>\n<a href="https://thesosa.com/pages/about-us" target="_blank" style="color:#c8a96e;font-weight:600;">About SOSA</a>\n<a href="https://thesosa.com/pages/sos-alliance" target="_blank" style="color:#c8a96e;font-weight:600;">SOS Alliance Network</a>\n<a href="https://www.instagram.com/blakemoynes/" target="_blank" style="color:#c8a96e;font-weight:600;">Blake\'s Instagram</a>\n<a href="https://www.instagram.com/the.sosa/" target="_blank" style="color:#c8a96e;font-weight:600;">SOSA Instagram</a>\n\nWhich trip are you interested in? I can point you to the exact page.'},
+  {keys:['costa rica link','costa rica apply','costa rica sign','costa rica page','costa rica url','costa rica book'], resp:'Here\'s everything you need for Costa Rica:\n\n<a href="https://thesosa.com/pages/experiences" target="_blank" style="color:#c8a96e;font-weight:600;">Apply for Costa Rica 2026</a>\n\n7 days in the rainforest. Sea turtles. Howler monkeys. $5,200 all-inclusive (lodging, meals, transport, activities). Net proceeds go directly to our conservation partners on the ground.\n\nThe application takes about 2 minutes and our team confirms your spot within 24-48 hours. Spots are limited to keep groups small and the experience intimate. Let me know if you have any questions!'},
+  {keys:['alaska link','alaska apply','alaska sign','alaska page','alaska url','alaska book'], resp:'Here\'s the link for Alaska:\n\n<a href="https://thesosa.com/pages/experiences" target="_blank" style="color:#c8a96e;font-weight:600;">Apply for Alaska 2026</a>\n\nBrown bear camping in Katmai. Population surveys. Salmon run observation. $5,200 all-inclusive. Limited to 7 spots per trip, and this one books out every year.\n\nFill out the application and our team will be in touch within 48 hours!'},
+  {keys:['bahamas link','bahamas apply','bahamas sign','bahamas page','bahamas url','bahamas book'], resp:'Here you go:\n\n<a href="https://thesosa.com/pages/saving-the-blue" target="_blank" style="color:#c8a96e;font-weight:600;">Bahamas Shark Research Details</a>\n<a href="https://thesosa.com/pages/experiences" target="_blank" style="color:#c8a96e;font-weight:600;">Apply Now</a>\n\nWeek-long shark research intensive with Saving the Blue in East Andros. Hammerheads, reef sharks, BRUVs, drum line surveys. 7 research assistant spots per trip.'},
+  {keys:['botswana link','botswana apply','botswana sign','botswana page','botswana url','botswana book'], resp:'Botswana applications open June 1! Here\'s where to watch:\n\n<a href="https://thesosa.com/pages/experiences" target="_blank" style="color:#c8a96e;font-weight:600;">SOSA Expeditions Page</a>\n<a href="https://www.instagram.com/the.sosa/" target="_blank" style="color:#c8a96e;font-weight:600;">Follow @the.sosa for launch announcement</a>\n\nImpact Safari in the Okavango Delta. Elephants, lions, community conservation. I\'d recommend following our Instagram so you don\'t miss the announcement.'},
+  {keys:['maldives link','maldives apply','maldives sign','maldives page','maldives url','maldives book'], resp:'Here\'s the Maldives info:\n\n<a href="https://thesosa.com/pages/experiences" target="_blank" style="color:#c8a96e;font-weight:600;">Apply for Maldives 2026</a>\n\nShark research expedition with Miyaru. Whale sharks, reef shark tagging, marine conservation data collection. Alumni get 48-hour early access before public launch.'},
+  {keys:['south africa link','south africa apply','south africa sign','south africa page','south africa url','south africa book','rhino link'], resp:'Here are your South Africa links:\n\n<a href="https://thesosa.com/pages/experiences" target="_blank" style="color:#c8a96e;font-weight:600;">Apply for South Africa 2026</a>\n<a href="https://thesosa.com/pages/about-us" target="_blank" style="color:#c8a96e;font-weight:600;">Read Blake\'s Story (it started here)</a>\n\nCare for Wild rhino sanctuary. Anti-poaching ranger training. 7 days that most people say changed their life. $5,200 all-inclusive.'},
+  {keys:['bolivia link','bolivia apply','bolivia sign','bolivia page','bolivia url','bolivia book','onca link'], resp:'Here\'s the Bolivia info:\n\n<a href="https://thesosa.com/pages/onca" target="_blank" style="color:#c8a96e;font-weight:600;">ONCA Wildlife Rescue Details</a>\n<a href="https://thesosa.com/pages/experiences" target="_blank" style="color:#c8a96e;font-weight:600;">Apply Now</a>\n\nPrimate rehabilitation in the Bolivian Amazon. Spider monkeys, capuchins, squirrel monkeys. This is conservation at its most personal.'},
+  {keys:['shop link','merch link','store link','buy','purchase'], resp:'Here\'s the shop:\n\n<a href="https://thesosa.com/collections/all" target="_blank" style="color:#c8a96e;font-weight:600;">Shop All SOSA Merch</a>\n\nToques ($28), Camper Caps ($40), Sun Flex Hoodies ($49), Rash Guards ($49), Heavyweight Cotton Shirts ($46). Every $100+ purchase funds the Alliance Allocation Fund supporting frontline wildlife NGOs.\n\nDon\'t forget your discount codes: SOSA15 for Baffin boots, BLAKE30 for Nanuk cases, BLAKE20 for Fahlo bracelets!'},
+  // Yes/sure/send it (contextual follow-ups)
+  {keys:['yes','yeah','sure','please','send it','absolutely','definitely','for sure','love to','i\'d like','sounds good','let\'s do it','interested','tell me more','more info','info'], resp:'Here you go! All the key links in one place:\n\n<a href="https://thesosa.com/pages/experiences" target="_blank" style="color:#c8a96e;font-weight:600;">Browse All Expeditions + Apply</a>\n<a href="https://thesosa.com/collections/all" target="_blank" style="color:#c8a96e;font-weight:600;">Shop Merch</a>\n<a href="https://www.instagram.com/the.sosa/" target="_blank" style="color:#c8a96e;font-weight:600;">Follow @the.sosa</a>\n\nThe expedition application takes about 2 minutes and our team gets back to you within 48 hours. If you have any specific questions about a trip, I\'m right here!'},
   // Fallback for general/greeting
   {keys:['hi','hello','hey','sup','yo','what up'], resp:"Hey! Welcome to SOSA. Whether you're curious about our conservation expeditions, want to know more about Blake's mission, or just browsing, I'm here to help.\n\nHere's what most people ask about:\n- Our 2026 expedition lineup (Costa Rica, Alaska, Botswana, Maldives, Bahamas, South Africa, Bolivia)\n- Pricing and what's included\n- Blake's story and how SOSA started\n- Our partner organizations and conservation impact\n- Merch and discount codes\n\nWhat's on your mind?"},
 ];
@@ -1410,7 +1436,7 @@ function getBotResponse(msg) {
     if (score > bestScore) { bestScore = score; bestMatch = entry; }
   }
   if (bestMatch && bestScore > 0) return bestMatch.resp;
-  return "Thanks for reaching out! I'd love to help. Are you interested in learning about our 2026 expeditions, hearing Blake's story, checking out merch, or something else? Just let me know what you're curious about and I'll point you in the right direction.";
+  return 'Of course! Here are the main links:\n\n<a href="https://thesosa.com/pages/experiences" target="_blank" style="color:#c8a96e;font-weight:600;">All Expeditions + Apply</a>\n<a href="https://thesosa.com/collections/all" target="_blank" style="color:#c8a96e;font-weight:600;">Shop Merch</a>\n<a href="https://thesosa.com/pages/about-us" target="_blank" style="color:#c8a96e;font-weight:600;">About SOSA</a>\n<a href="https://www.instagram.com/the.sosa/" target="_blank" style="color:#c8a96e;font-weight:600;">Follow @the.sosa</a>\n\nLet me know if you have any questions about a specific trip or anything else!';
 }
 
 let chatTimeout;
@@ -1519,10 +1545,10 @@ const dripData = {
 
 let currentTrip = 'southafrica';
 
-function switchTrip(trip) {
+function switchTrip(trip, el) {
   currentTrip = trip;
   document.querySelectorAll('.drip-trip-btn').forEach(function(b) { b.classList.remove('drip-trip-active'); });
-  event.target.classList.add('drip-trip-active');
+  if (el) el.classList.add('drip-trip-active');
   closeDripEmail();
   renderDrip();
 }
@@ -1568,9 +1594,9 @@ function animateValue(el, target, prefix, suffix) {
   }, 25);
 }
 
-function switchImpactView(view) {
+function switchImpactView(view, el) {
   document.querySelectorAll('.impact-view-btn').forEach(function(b) { b.classList.remove('impact-view-active'); });
-  event.target.classList.add('impact-view-active');
+  if (el) el.classList.add('impact-view-active');
   renderImpactView(view);
 }
 
