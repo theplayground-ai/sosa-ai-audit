@@ -120,7 +120,7 @@
   <div class="nav-brand">SOSA <span>x</span> AI</div>
   <div class="nav-links">
     <a href="#agenda" class="active">Agenda</a>
-    <a href="#commands">Commands</a>
+    <a href="#voice">Voice-First</a>
     <a href="#skills">Skills</a>
     <a href="#video">Video Team</a>
     <a href="#topics">Deep Dives</a>
@@ -150,8 +150,8 @@
     </div>
     <div class="agenda-item">
       <div class="agenda-time">Part 1 - 20 min</div>
-      <div class="agenda-title">Slash Commands: Your Daily Toolkit</div>
-      <div class="agenda-desc">The built-in commands that make Claude Code fast. /init, /compact, /cost, /clear, and how to chain them for different workflows.</div>
+      <div class="agenda-title">Voice-First Workflow: Speak, Don't Type</div>
+      <div class="agenda-desc">How to use Wispr Flow to speak into the terminal and have Claude do everything for you. Never manually edit a file again.</div>
     </div>
     <div class="agenda-item">
       <div class="agenda-time">Part 2 - 30 min</div>
@@ -181,65 +181,73 @@
   </div>
 </section>
 
-<!-- Slash Commands -->
-<section class="section" id="commands">
-  <div class="section-label">Part 1: The Basics</div>
-  <div class="section-title fade-in">Slash Commands You Need to Know</div>
-  <div class="section-sub fade-in">These are your daily drivers. Memorize these and you'll move 10x faster.</div>
-  <div class="cmd-grid fade-in">
-    <div class="cmd-card">
-      <div class="cmd-name">/init</div>
-      <div class="cmd-desc">Initialize a new project. Creates CLAUDE.md, sets up context structure, gets Claude oriented to your codebase.</div>
-      <div class="cmd-example">$ /init</div>
-      <div class="cmd-sosa">Use when: Starting any new SOSA project or tool</div>
+<!-- Voice-First Workflow -->
+<section class="section" id="voice" style="background:var(--off-white);">
+  <div class="section-label">Part 1: The Core Principle</div>
+  <div class="section-title fade-in">Voice-First: Speak, Don't Type</div>
+  <div class="section-sub fade-in">You have Wispr Flow. That means you never need to manually edit a file. You speak into the terminal, and Claude does the rest.</div>
+
+  <div style="background:linear-gradient(135deg,var(--green),var(--teal));border-radius:16px;padding:40px;margin-top:32px;color:white;" class="fade-in">
+    <div style="font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;">THE GOLDEN RULE</div>
+    <div style="font-size:28px;font-weight:800;line-height:1.3;max-width:700px;">Never open a file to edit it manually. Tell Claude what you want changed, and let Claude make the edit.</div>
+    <div style="font-size:16px;opacity:0.7;margin-top:12px;max-width:600px;">This applies to CLAUDE.md, context files, skills, code, everything. If you're typing into a file by hand, you're doing it the slow way.</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:32px;" class="fade-in">
+
+    <div style="background:white;border-radius:16px;border:1px solid var(--gray-200);padding:28px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:var(--accent);margin-bottom:12px;">EXAMPLE 1: UPDATING YOUR CONTEXT</div>
+      <div style="font-size:14px;font-weight:600;color:#d63a3a;margin-bottom:8px;">Instead of: Opening CLAUDE.md in an editor and typing</div>
+      <div style="background:var(--green);color:white;padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.7;margin-top:8px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--accent);margin-bottom:6px;">SAY THIS INTO THE TERMINAL:</div>
+        "Hey, update my CLAUDE.md to include that our Costa Rica expedition is $5,200 per person for 7 days, and our partner there is the local sea turtle conservation team. Also add that Blake leads every trip personally."
+      </div>
+      <div style="font-size:13px;color:var(--gray-500);margin-top:12px;">Claude reads the file, makes the edit, and saves it. You never touch the file.</div>
     </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/compact</div>
-      <div class="cmd-desc">Compress conversation history to free up context window. Essential for long sessions. Claude keeps the important stuff, drops the noise.</div>
-      <div class="cmd-example">$ /compact</div>
-      <div class="cmd-sosa">Use when: Claude starts forgetting things or slowing down</div>
+
+    <div style="background:white;border-radius:16px;border:1px solid var(--gray-200);padding:28px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:var(--accent);margin-bottom:12px;">EXAMPLE 2: CREATING A NEW SKILL</div>
+      <div style="font-size:14px;font-weight:600;color:#d63a3a;margin-bottom:8px;">Instead of: Creating a .md file and writing a prompt by hand</div>
+      <div style="background:var(--green);color:white;padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.7;margin-top:8px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--accent);margin-bottom:6px;">SAY THIS INTO THE TERMINAL:</div>
+        "Create a new skill called expedition-email that generates a 5-email post-trip nurture sequence. It should read our expedition details from context, use Blake's voice, and include specific impact metrics for each partner NGO."
+      </div>
+      <div style="font-size:13px;color:var(--gray-500);margin-top:12px;">Claude creates the file at .claude/commands/expedition-email.md with the full prompt. Done.</div>
     </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/cost</div>
-      <div class="cmd-desc">Check how much this session has cost so far. Track your API usage and know when to compact.</div>
-      <div class="cmd-example">$ /cost</div>
-      <div class="cmd-sosa">Use when: Want to track spend on a project</div>
+
+    <div style="background:white;border-radius:16px;border:1px solid var(--gray-200);padding:28px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:var(--accent);margin-bottom:12px;">EXAMPLE 3: BUILDING SOMETHING NEW</div>
+      <div style="font-size:14px;font-weight:600;color:#d63a3a;margin-bottom:8px;">Instead of: Writing code or designing layouts yourself</div>
+      <div style="background:var(--green);color:white;padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.7;margin-top:8px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--accent);margin-bottom:6px;">SAY THIS INTO THE TERMINAL:</div>
+        "Build me an expedition booking page that shows all our 2026 trips, their dates, pricing, and what's included. Match our SOSA website branding. Make it so people can click to apply for each trip."
+      </div>
+      <div style="font-size:13px;color:var(--gray-500);margin-top:12px;">Claude builds the entire page, serves it locally, and you see it in your browser. Want changes? Just speak them.</div>
     </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/clear</div>
-      <div class="cmd-desc">Start fresh. Wipes conversation history but keeps your CLAUDE.md context. Good for switching tasks.</div>
-      <div class="cmd-example">$ /clear</div>
-      <div class="cmd-sosa">Use when: Switching from content work to operations</div>
+
+    <div style="background:white;border-radius:16px;border:1px solid var(--gray-200);padding:28px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:var(--accent);margin-bottom:12px;">EXAMPLE 4: IMPROVING RESULTS</div>
+      <div style="font-size:14px;font-weight:600;color:#d63a3a;margin-bottom:8px;">Instead of: Rewriting prompts or editing outputs manually</div>
+      <div style="background:var(--green);color:white;padding:16px 20px;border-radius:10px;font-size:14px;line-height:1.7;margin-top:8px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--accent);margin-bottom:6px;">SAY THIS INTO THE TERMINAL:</div>
+        "That email sequence was good but the tone is too corporate. Make it more raw and personal, like Blake is texting a friend. Also the impact numbers in email 3 should be more specific to what Care for Wild actually does."
+      </div>
+      <div style="font-size:13px;color:var(--gray-500);margin-top:12px;">Claude takes the feedback, rewrites the content, and saves the updated version. Iterate by talking.</div>
     </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/help</div>
-      <div class="cmd-desc">See all available commands and how to use them. Your quick reference when you forget a command.</div>
-      <div class="cmd-example">$ /help</div>
-      <div class="cmd-sosa">Use when: Can't remember a command name</div>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/model</div>
-      <div class="cmd-desc">Switch between Claude models. Opus for complex strategy, Sonnet for fast coding, Haiku for quick tasks.</div>
-      <div class="cmd-example">$ /model sonnet</div>
-      <div class="cmd-sosa">Use when: Simple tasks don't need the biggest model</div>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/vim</div>
-      <div class="cmd-desc">Toggle vim mode for keyboard-driven editing. For power users who want to move faster in the terminal.</div>
-      <div class="cmd-example">$ /vim</div>
-      <div class="cmd-sosa">Use when: You're comfortable with terminal workflow</div>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/permissions</div>
-      <div class="cmd-desc">Control what Claude can do automatically vs. what needs your approval. Set trust levels for different actions.</div>
-      <div class="cmd-example">$ /permissions</div>
-      <div class="cmd-sosa">Use when: Setting up a new workspace</div>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/doctor</div>
-      <div class="cmd-desc">Diagnose issues with your Claude Code setup. Checks API keys, permissions, and configuration.</div>
-      <div class="cmd-example">$ /doctor</div>
-      <div class="cmd-sosa">Use when: Something isn't working right</div>
+  </div>
+
+  <div style="background:white;border-radius:16px;border:1px solid var(--gray-200);padding:28px;margin-top:20px;" class="fade-in">
+    <div style="font-size:14px;font-weight:700;color:var(--green);margin-bottom:16px;">THE DAILY WORKFLOW</div>
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div style="background:var(--green-lighter);padding:14px 20px;border-radius:10px;font-size:14px;font-weight:600;">Open terminal</div>
+      <div style="color:var(--gray-400);font-size:20px;">&rarr;</div>
+      <div style="background:var(--green-lighter);padding:14px 20px;border-radius:10px;font-size:14px;font-weight:600;">Type <span style="font-family:monospace;background:var(--green);color:white;padding:2px 8px;border-radius:4px;">claude</span></div>
+      <div style="color:var(--gray-400);font-size:20px;">&rarr;</div>
+      <div style="background:var(--green-lighter);padding:14px 20px;border-radius:10px;font-size:14px;font-weight:600;">Speak with Wispr Flow</div>
+      <div style="color:var(--gray-400);font-size:20px;">&rarr;</div>
+      <div style="background:var(--green-lighter);padding:14px 20px;border-radius:10px;font-size:14px;font-weight:600;">Claude executes</div>
+      <div style="color:var(--gray-400);font-size:20px;">&rarr;</div>
+      <div style="background:var(--green);padding:14px 20px;border-radius:10px;font-size:14px;font-weight:700;color:white;">Review + iterate</div>
     </div>
   </div>
 </section>
@@ -251,27 +259,27 @@
   <div class="section-sub fade-in">Skills are reusable prompts that run entire workflows with one command. This is where Claude Code goes from assistant to operations team.</div>
 
   <div style="background:white;border-radius:16px;border:1px solid var(--gray-200);padding:32px;margin-top:32px;" class="fade-in">
-    <div style="font-size:14px;font-weight:700;color:var(--green);margin-bottom:16px;">HOW SKILLS WORK</div>
+    <div style="font-size:14px;font-weight:700;color:var(--green);margin-bottom:16px;">HOW SKILLS WORK (VOICE-FIRST)</div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;">
       <div>
         <div style="font-size:36px;margin-bottom:8px;">1</div>
-        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Create a .md File</div>
-        <div style="font-size:13px;color:var(--gray-500);">Write instructions in a markdown file inside .claude/commands/</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Speak Your Idea</div>
+        <div style="font-size:13px;color:var(--gray-500);">Tell Claude what you want to automate. Describe the workflow in your own words using Wispr Flow.</div>
       </div>
       <div>
         <div style="font-size:36px;margin-bottom:8px;">2</div>
-        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Define the Prompt</div>
-        <div style="font-size:13px;color:var(--gray-500);">Tell Claude exactly what to do, what context to read, and what to output</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Claude Creates the Skill</div>
+        <div style="font-size:13px;color:var(--gray-500);">Claude writes the skill file for you, saves it in the right place, and sets it up as a /command.</div>
       </div>
       <div>
         <div style="font-size:36px;margin-bottom:8px;">3</div>
-        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Run with /command</div>
-        <div style="font-size:13px;color:var(--gray-500);">Type /your-skill-name and Claude executes the entire workflow</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Say /command to Run</div>
+        <div style="font-size:13px;color:var(--gray-500);">Speak or type /your-skill-name and Claude executes the entire workflow automatically.</div>
       </div>
       <div>
         <div style="font-size:36px;margin-bottom:8px;">4</div>
-        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Iterate + Improve</div>
-        <div style="font-size:13px;color:var(--gray-500);">Refine the skill based on results. Skills get better the more you use them</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Speak Improvements</div>
+        <div style="font-size:13px;color:var(--gray-500);">"That was good but change the tone" or "add a section about pricing." Claude updates the skill.</div>
       </div>
     </div>
   </div>
@@ -280,90 +288,174 @@
     <div class="skill-card">
       <h3>Expedition Email Writer</h3>
       <p>One command generates a complete post-expedition email sequence customized per trip destination, with personalized impact metrics and next-trip teasers.</p>
-      <div class="skill-label">Skill File: .claude/commands/expedition-email.md</div>
-      <div class="skill-file"># Expedition Email Writer
+      <div class="skill-label">Say this to create the skill:</div>
+      <div class="skill-file" style="background:var(--green);color:white;border-color:var(--green);">"Create a skill called expedition-email that generates a 5-email post-trip nurture sequence. It should read our expedition details from context, write a welcome home email, a photo gallery email for day 3, an impact report with real numbers for day 7, a next-trip early access email for day 14, and an alliance membership invite for day 30. Use Blake's voice, authentic not salesy, and include specific impact metrics per partner NGO."</div>
+      <div class="skill-label" style="margin-top:16px;">Or copy-paste this skill file:</div>
+      <div class="skill-file" style="font-size:11px;line-height:1.7;cursor:pointer;position:relative;" onclick="navigator.clipboard.writeText(this.textContent.trim());this.querySelector('.copy-toast').style.opacity=1;setTimeout(()=>this.querySelector('.copy-toast').style.opacity=0,1500)"><span class="copy-toast" style="position:absolute;top:8px;right:8px;background:var(--green);color:white;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;opacity:0;transition:opacity 0.3s;">Copied!</span># Expedition Email Writer
+# Save to: .claude/commands/expedition-email.md
 
 Read context/expeditions.md for trip details.
 Read context/partners.md for NGO impact data.
 
-Generate a 5-email post-expedition drip:
-1. Welcome home (send immediately)
-2. Photo gallery (day 3)
-3. Impact report with real numbers (day 7)
-4. Next trip early access (day 14)
-5. Alliance membership invite (day 30)
+Generate a 5-email post-expedition drip sequence
+for the expedition specified in $ARGUMENTS:
 
-Use Blake's voice. Authentic, not salesy.
-Include specific impact metrics per partner.</div>
+1. Welcome home (send immediately)
+   - Emotional, personal, "you're part of this now"
+2. Photo + video gallery (day 3)
+   - "Your trip in photos. Share with everyone."
+3. Impact report with REAL numbers (day 7)
+   - Exactly where their money went, species helped
+4. Next trip early access (day 14)
+   - Alumni get 48hr head start, specific trip details
+5. SOS Alliance membership invite (day 30)
+   - Inner circle, researcher access, impact voting
+
+Voice: Blake Moynes. Authentic, raw, personal.
+Never corporate. Never salesy. Like texting a friend
+who just lived something incredible with you.</div>
+      <div class="skill-label" style="margin-top:12px;">Then run it:</div>
+      <div class="skill-file">/expedition-email South Africa</div>
       <div class="topic-tags"><span class="topic-tag sosa">Expeditions</span><span class="topic-tag sosa">Email</span></div>
     </div>
 
     <div class="skill-card">
-      <h3>Content Repurposer</h3>
-      <p>Takes one piece of long-form content (expedition vlog, podcast episode, blog post) and generates versions for every platform.</p>
-      <div class="skill-label">Skill File: .claude/commands/repurpose.md</div>
-      <div class="skill-file"># Content Repurposer
+      <h3>Content Vault Repurposer</h3>
+      <p>The big one. Feed in ANY existing content (old expedition vlogs, podcast episodes, field footage, blog posts, even raw B-roll descriptions) and it generates fresh content for every platform. Perfect for unlocking years of sitting content.</p>
+      <div class="skill-label">Say this to create the skill:</div>
+      <div class="skill-file" style="background:var(--green);color:white;border-color:var(--green);">"Build me a skill called repurpose. When I run it, I'll give it a transcript or content from an old video or post. It should generate an Instagram caption, a TikTok script with a 60-second hook, a Twitter thread, a LinkedIn post, a blog post of 800 to 1200 words optimized for SEO, a YouTube description with timestamps, and a newsletter snippet. Match SOSA's voice throughout. Urgent but warm, mission-driven, never preachy."</div>
+      <div class="skill-label" style="margin-top:16px;">Or copy-paste this skill file:</div>
+      <div class="skill-file" style="font-size:11px;line-height:1.7;cursor:pointer;position:relative;" onclick="navigator.clipboard.writeText(this.textContent.trim());this.querySelector('.copy-toast').style.opacity=1;setTimeout(()=>this.querySelector('.copy-toast').style.opacity=0,1500)"><span class="copy-toast" style="position:absolute;top:8px;right:8px;background:var(--green);color:white;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;opacity:0;transition:opacity 0.3s;">Copied!</span># Content Vault Repurposer
+# Save to: .claude/commands/repurpose.md
 
-Input: $ARGUMENTS (paste transcript or content)
+Input: $ARGUMENTS (transcript or content description)
 
-Generate for each platform:
+Take this content and generate optimized versions
+for EVERY platform:
+
 - Instagram caption (max 2200 chars, 5-10 hashtags)
-- TikTok script (60 sec hook + story)
-- Twitter thread (5-7 tweets)
-- LinkedIn post (professional angle)
+  Hook in first line. Story in the middle. CTA at end.
+- TikTok script (60 sec: hook + story + payoff)
+  First 3 seconds must stop the scroll.
+- Twitter/X thread (5-7 tweets, thread format)
+  Lead with the most surprising fact.
+- LinkedIn post (professional conservation angle)
+  Position SOSA as thought leader.
 - Blog post (800-1200 words, SEO optimized)
+  Target keywords: conservation, expedition, wildlife
 - YouTube description + timestamps
-- Newsletter snippet (200 words)
+  Include booking link and merch link.
+- Newsletter snippet (200 words, email-ready)
+  Drive to expedition booking page.
 
-Match SOSA's voice: urgent but warm,
-mission-driven, never preachy.</div>
-      <div class="topic-tags"><span class="topic-tag video">Content</span><span class="topic-tag all">All Platforms</span></div>
+Voice: SOSA brand. Urgent but warm. Mission-driven.
+Never preachy. Never use the word "organic."
+Conservation is a lifestyle, not a lecture.</div>
+      <div class="skill-label" style="margin-top:12px;">Then run it:</div>
+      <div class="skill-file">/repurpose [paste transcript from any old video]</div>
+      <div style="background:var(--accent-light);padding:12px 16px;border-radius:8px;margin-top:12px;font-size:13px;color:#8a6d3b;font-weight:600;">This is how you unlock your content vault. Years of expedition footage, one command per piece, seven platform outputs each.</div>
+      <div class="topic-tags"><span class="topic-tag video">Content Vault</span><span class="topic-tag all">All Platforms</span></div>
     </div>
 
     <div class="skill-card">
       <h3>Blog Post Generator</h3>
       <p>Transforms field notes, expedition journals, or interview transcripts into SEO-optimized blog posts for the SOSA Adventures blog.</p>
-      <div class="skill-label">Skill File: .claude/commands/blog.md</div>
-      <div class="skill-file"># SOSA Blog Writer
+      <div class="skill-label">Say this to create the skill:</div>
+      <div class="skill-file" style="background:var(--green);color:white;border-color:var(--green);">"Create a skill called blog that takes field notes or a transcript and writes a 1000 to 1500 word blog post for the SOSA Adventures blog. It should include a compelling headline, a hook paragraph, 3 to 5 subheadings, specific species and location details, a call to action for expedition booking or merch, and SEO keywords woven in naturally. Tone is first-person Blake voice. Raw and real, not polished corporate."</div>
+      <div class="skill-label" style="margin-top:16px;">Or copy-paste this skill file:</div>
+      <div class="skill-file" style="font-size:11px;line-height:1.7;cursor:pointer;position:relative;" onclick="navigator.clipboard.writeText(this.textContent.trim());this.querySelector('.copy-toast').style.opacity=1;setTimeout(()=>this.querySelector('.copy-toast').style.opacity=0,1500)"><span class="copy-toast" style="position:absolute;top:8px;right:8px;background:var(--green);color:white;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;opacity:0;transition:opacity 0.3s;">Copied!</span># SOSA Blog Writer
+# Save to: .claude/commands/blog.md
 
-Input: $ARGUMENTS (field notes or transcript)
+Input: $ARGUMENTS (field notes, transcript, or topic)
 
 Write a 1000-1500 word blog post for
 thesosa.com/blogs/sosa-adventures
 
-Include:
-- Compelling headline (under 70 chars)
-- Hook paragraph that pulls readers in
+Structure:
+- Headline (under 70 chars, compelling)
+- Hook paragraph (pull reader in immediately)
 - 3-5 subheadings for scannability
-- Specific details (species names, locations)
-- Call to action (expedition booking or merch)
-- SEO keywords naturally woven in
+- Specific details (species names, GPS coords, dates)
+- Partner NGO mention with link
+- Call to action (expedition booking OR merch)
+- SEO keywords woven naturally throughout
 
-Tone: first-person Blake voice.
-Raw and real, not polished corporate.</div>
+Target keywords: conservation expedition, wildlife
+volunteer, [destination] conservation, SOSA
+
+Tone: First-person Blake voice. Raw and real.
+Not polished corporate. Like a journal entry that
+happens to be beautifully written. Include sensory
+details: what it smelled like, what you heard,
+what you felt when the rhino looked at you.</div>
+      <div class="skill-label" style="margin-top:12px;">Then run it:</div>
+      <div class="skill-file">/blog [paste field notes or dictate them]</div>
       <div class="topic-tags"><span class="topic-tag sosa">Blog</span><span class="topic-tag all">SEO</span></div>
     </div>
 
     <div class="skill-card video-skill">
       <h3>Video Show Notes Generator</h3>
       <p>Takes a video transcript and generates complete show notes, timestamps, key quotes, and social clips list for the video team.</p>
-      <div class="skill-label">Skill File: .claude/commands/show-notes.md</div>
-      <div class="skill-file"># Video Show Notes
+      <div class="skill-label">Say this to create the skill:</div>
+      <div class="skill-file" style="background:var(--green);color:white;border-color:var(--green);">"Build a skill called show-notes for our video team. When they run it with a transcript, it should generate an episode summary, timestamps with descriptions, the top 5 quotable moments with exact quotes, suggested clip timestamps for Reels and TikTok, an SEO optimized YouTube title and description, 10 relevant tags, and 3 thumbnail text suggestions. Format everything for easy copy-paste into YouTube Studio."</div>
+      <div class="skill-label" style="margin-top:16px;">Or copy-paste this skill file:</div>
+      <div class="skill-file" style="font-size:11px;line-height:1.7;cursor:pointer;position:relative;" onclick="navigator.clipboard.writeText(this.textContent.trim());this.querySelector('.copy-toast').style.opacity=1;setTimeout(()=>this.querySelector('.copy-toast').style.opacity=0,1500)"><span class="copy-toast" style="position:absolute;top:8px;right:8px;background:var(--green);color:white;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;opacity:0;transition:opacity 0.3s;">Copied!</span># Video Show Notes Generator
+# Save to: .claude/commands/show-notes.md
 
-Input: $ARGUMENTS (paste transcript)
+Input: $ARGUMENTS (full transcript)
 
-Generate:
-1. Episode summary (3 sentences)
-2. Timestamps with descriptions
-3. Top 5 quotable moments (exact quotes)
-4. Suggested clip timestamps for Reels/TikTok
-5. SEO-optimized YouTube title + description
-6. 10 relevant tags
-7. Thumbnail text suggestions (3 options)
+Generate complete production package:
 
-Format for easy copy-paste into YouTube
-Studio and social scheduling tools.</div>
+1. EPISODE SUMMARY (3 sentences, punchy)
+2. TIMESTAMPS with topic descriptions
+   Format: 00:00 - Topic name
+3. TOP 5 QUOTABLE MOMENTS (exact quotes + timestamp)
+   Pick the most emotional/surprising lines
+4. REEL/TIKTOK CLIP SUGGESTIONS (5 clips)
+   Start timestamp, end timestamp, why it works
+5. YOUTUBE TITLE (3 options, SEO optimized)
+   Include power words: "I couldn't believe", "This is why"
+6. YOUTUBE DESCRIPTION (full, with links)
+   Include thesosa.com/pages/experiences
+   Include merch link and partner tags
+7. TAGS (10 relevant, mix broad + niche)
+8. THUMBNAIL TEXT (3 options, max 5 words each)
+   High contrast, curiosity-driven
+
+Format for easy copy-paste into YouTube Studio.</div>
+      <div class="skill-label" style="margin-top:12px;">Then run it:</div>
+      <div class="skill-file">/show-notes [paste transcript]</div>
       <div class="topic-tags"><span class="topic-tag video">Video</span><span class="topic-tag video">Podcast</span></div>
+    </div>
+
+    <div class="skill-card" style="grid-column:1/-1;">
+      <div style="display:flex;gap:32px;align-items:flex-start;">
+        <div style="flex:1;">
+          <h3>Content Vault Strategy: Unlocking Years of Footage</h3>
+          <p>SOSA has years of expedition footage, interviews, field journals, and social posts sitting unused. Here's the voice-first workflow to turn all of it into fresh content:</p>
+          <div class="skill-label" style="margin-top:16px;">Step 1: Tell Claude about your content vault</div>
+          <div class="skill-file" style="background:var(--green);color:white;border-color:var(--green);">"I have years of expedition footage and content that I want to repurpose. I'm going to start feeding you transcripts and descriptions of old content. For each one, I want you to tell me what platforms it would work best on, what angle to take for each platform, and then generate the actual posts. Start with the most emotionally powerful moments first."</div>
+          <div class="skill-label" style="margin-top:12px;">Step 2: Feed content in batches</div>
+          <div class="skill-file" style="background:var(--green);color:white;border-color:var(--green);">"Here's a transcript from our South Africa expedition in 2024. We collared two rhinos and trained with anti-poaching rangers. Pull out the best moments and create a week's worth of content from this single trip."</div>
+          <div class="skill-label" style="margin-top:12px;">Step 3: Build a content backlog</div>
+          <div class="skill-file" style="background:var(--green);color:white;border-color:var(--green);">"Take all the content you've generated from our last 3 expedition transcripts and organize it into a 30-day content calendar. Mix expedition content, education posts, merch features, and partner spotlights. Make sure we're posting 4-5 times per week across Instagram, TikTok, and YouTube."</div>
+        </div>
+        <div style="flex:0 0 280px;background:var(--accent-light);border-radius:12px;padding:24px;">
+          <div style="font-size:13px;font-weight:700;color:#8a6d3b;margin-bottom:12px;">CONTENT VAULT MATH</div>
+          <div style="font-size:13px;line-height:1.8;color:var(--dark);">
+            <strong>1 expedition video</strong> =<br>
+            7 Instagram posts<br>
+            5 TikTok scripts<br>
+            3 YouTube Shorts<br>
+            1 blog post<br>
+            1 email newsletter<br>
+            5 Twitter posts<br>
+            1 LinkedIn article<br><br>
+            <strong style="color:var(--green);">= 23 pieces of content</strong><br><br>
+            If SOSA has 20 old expedition videos, that's <strong style="color:var(--green);">460 pieces of content</strong> waiting to be unlocked.
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -524,50 +616,50 @@ Studio and social scheduling tools.</div>
     <div class="check-item">
       <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
       <div>
-        <div class="check-text">Build one custom skill on your own</div>
-        <div class="check-sub">Pick any workflow you repeat. Write the .md file, test it, iterate. Doesn't need to be perfect.</div>
+        <div class="check-text">Say: "Create a skill that does [something you repeat weekly]"</div>
+        <div class="check-sub">Pick any workflow. Speak the description into the terminal. Let Claude build the skill file. Test it. Say what to improve.</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
       <div>
-        <div class="check-text">Expand your CLAUDE.md with expedition details</div>
-        <div class="check-sub">Add partner NGO details, trip pricing, team info, brand voice guidelines. The more context, the better the outputs.</div>
+        <div class="check-text">Say: "Update my CLAUDE.md with all our expedition pricing, partner details, and brand voice"</div>
+        <div class="check-sub">Dictate everything you know about SOSA into the terminal. Claude adds it to your context file. More context = better outputs.</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
       <div>
-        <div class="check-text">Transcribe one expedition video with Whisper</div>
-        <div class="check-sub">Run: whisper your-video.mp4 --model medium. Then feed the transcript to the /repurpose skill.</div>
+        <div class="check-text">Repurpose one old expedition video</div>
+        <div class="check-sub">Say: "Transcribe this video" then "/repurpose [paste transcript]". One old video becomes 23 pieces of fresh content.</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
       <div>
-        <div class="check-text">Generate one blog post from field notes</div>
-        <div class="check-sub">Take any expedition journal entry or notes and run the /blog skill. Edit the output to match Blake's voice exactly.</div>
+        <div class="check-text">Say: "Write a blog post from these field notes" and dictate the notes</div>
+        <div class="check-sub">Speak your expedition memories into Wispr Flow. Claude turns raw dictation into a polished blog post in Blake's voice.</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
       <div>
-        <div class="check-text">Test 10 different prompts with the DM bot concept</div>
-        <div class="check-sub">Think about what followers actually ask. Test edge cases. What happens when someone asks about safety? Pricing? Accessibility?</div>
+        <div class="check-text">Say: "Generate a 5-email sequence for our South Africa expedition"</div>
+        <div class="check-sub">Use the /expedition-email skill or just speak the request. Review the output, then say what to change. Iterate by voice.</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
       <div>
-        <div class="check-text">Draft a post-expedition email sequence for one trip</div>
-        <div class="check-sub">Pick South Africa or Bahamas. Write all 5 emails. Use the drip demo in the audit dashboard as a starting point.</div>
+        <div class="check-text">Say: "Plan a 30-day content calendar using our existing expedition footage"</div>
+        <div class="check-sub">Tell Claude about your content vault. Let it build a full month of posts from content you already have sitting unused.</div>
       </div>
     </div>
     <div class="check-item">
       <div class="check-box" onclick="this.classList.toggle('checked')">&#10003;</div>
       <div>
-        <div class="check-text">Explore MCP servers (advanced)</div>
-        <div class="check-sub">MCP lets Claude Code connect to external tools (Google Calendar, Slack, Shopify). Research which ones could help SOSA.</div>
+        <div class="check-text">Say: "What MCP servers could help SOSA connect to Shopify and our booking system?"</div>
+        <div class="check-sub">MCP lets Claude connect to external tools. Ask Claude to research which ones fit SOSA. It'll explain what's possible.</div>
       </div>
     </div>
   </div>
