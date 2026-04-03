@@ -643,6 +643,30 @@
   }
   .score-val { font-size: 14px; font-weight: 700; color: var(--sosa-green); }
 
+  /* ─── Drip Trip Buttons ─── */
+  .drip-trip-btn, .impact-view-btn {
+    padding: 8px 16px; border-radius: 100px;
+    border: 1px solid var(--sosa-gray-300);
+    background: white; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; font-family: inherit;
+    color: var(--sosa-gray-500);
+  }
+  .drip-trip-btn:hover, .impact-view-btn:hover { border-color: var(--sosa-green); color: var(--sosa-green); }
+  .drip-trip-active, .impact-view-active {
+    background: var(--sosa-green) !important; color: white !important;
+    border-color: var(--sosa-green) !important;
+  }
+  .drip-step-clickable { cursor: pointer; transition: all 0.2s; }
+  .drip-step-clickable:hover { transform: translateX(4px); }
+  .drip-step-clickable .drip-subject { text-decoration: underline; text-decoration-color: var(--sosa-gray-300); text-underline-offset: 3px; }
+
+  /* ─── Impact tabs ─── */
+  .impact-stat-card {
+    background: var(--sosa-gray-100); border-radius: 12px; padding: 20px; text-align: center;
+    transition: all 0.3s; cursor: default;
+  }
+  .impact-stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+
   /* ─── Responsive ─── */
   @media (max-width: 1100px) {
     .biz-grid { grid-template-columns: repeat(3, 1fr); }
@@ -1060,122 +1084,111 @@
       </div>
     </div>
 
-    <!-- Email Drip Demo -->
+    <!-- Email Drip Demo (Interactive) -->
     <div class="demo-card">
       <div class="demo-header">
         <h3>Post-Expedition Email Sequence</h3>
         <div class="demo-live-tag"><div class="demo-live-dot"></div>Live Demo</div>
       </div>
       <div class="demo-body">
-        <div class="drip-timeline" id="dripTimeline">
-          <div class="drip-step sent">
-            <div class="drip-day">Immediately After Trip</div>
-            <div class="drip-subject">Welcome to the SOSA Alumni Family</div>
-            <div class="drip-preview">"You didn't just take a trip. You became part of something bigger..."</div>
-            <div class="drip-stat">68% open rate (industry avg: 21%)</div>
+        <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+          <button class="drip-trip-btn drip-trip-active" onclick="switchTrip('southafrica')">South Africa</button>
+          <button class="drip-trip-btn" onclick="switchTrip('costarica')">Costa Rica</button>
+          <button class="drip-trip-btn" onclick="switchTrip('bahamas')">Bahamas</button>
+          <button class="drip-trip-btn" onclick="switchTrip('alaska')">Alaska</button>
+        </div>
+        <div class="drip-timeline" id="dripTimeline"></div>
+        <div id="dripEmailPreview" style="display:none;margin-top:20px;background:white;border:1px solid var(--sosa-gray-200);border-radius:12px;overflow:hidden;">
+          <div id="dripEmailHeader" style="padding:16px 20px;background:var(--sosa-gray-100);border-bottom:1px solid var(--sosa-gray-200);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:11px;color:var(--sosa-gray-400);font-weight:600;">FROM: SOSA Conservation Co. &lt;hello@thesosa.com&gt;</div>
+                <div id="dripEmailSubject" style="font-size:16px;font-weight:700;margin-top:4px;"></div>
+              </div>
+              <button onclick="closeDripEmail()" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--sosa-gray-400);">&#10005;</button>
+            </div>
           </div>
-          <div class="drip-step sent">
-            <div class="drip-day">Day 3</div>
-            <div class="drip-subject">Your Trip in Photos + Video</div>
-            <div class="drip-preview">Curated gallery from your expedition. Share with friends and family.</div>
-            <div class="drip-stat">72% open rate</div>
-          </div>
-          <div class="drip-step sent">
-            <div class="drip-day">Day 7</div>
-            <div class="drip-subject">Your Impact Report: Here's What You Funded</div>
-            <div class="drip-preview">"Your expedition directly funded 3 months of anti-poaching patrols..."</div>
-            <div class="drip-stat">81% open rate (the money shot)</div>
-          </div>
-          <div class="drip-step scheduled">
-            <div class="drip-day">Day 14</div>
-            <div class="drip-subject">Exclusive: Early Access to Alaska 2026</div>
-            <div class="drip-preview">Alumni get first pick before public launch. 60% of you come back.</div>
-          </div>
-          <div class="drip-step scheduled">
-            <div class="drip-day">Day 30</div>
-            <div class="drip-subject">The Alliance Awaits: Join the Inner Circle</div>
-            <div class="drip-preview">SOS Alliance membership invite. Direct line to field researchers.</div>
-          </div>
+          <div id="dripEmailBody" style="padding:24px;font-size:14px;line-height:1.8;color:var(--sosa-dark);max-height:300px;overflow-y:auto;"></div>
         </div>
       </div>
     </div>
 
     <!-- Content Calendar -->
-    <div class="demo-card">
+    <div class="demo-card demo-full">
       <div class="demo-header">
         <h3>AI Content Calendar</h3>
         <div class="demo-live-tag"><div class="demo-live-dot"></div>Live Demo</div>
       </div>
       <div class="demo-body">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-          <div style="font-size:18px;font-weight:700;">April 2026</div>
-          <div style="display:flex;gap:8px;">
-            <button onclick="prevMonth()" style="padding:6px 12px;border:1px solid #dee2e6;border-radius:6px;background:white;cursor:pointer;font-family:inherit;">&larr;</button>
-            <button onclick="nextMonth()" style="padding:6px 12px;border:1px solid #dee2e6;border-radius:6px;background:white;cursor:pointer;font-family:inherit;">&rarr;</button>
+        <div style="display:flex;gap:24px;">
+          <!-- Calendar side -->
+          <div style="flex:1.2;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <div id="calMonthLabel" style="font-size:18px;font-weight:700;">April 2026</div>
+              <div style="display:flex;gap:8px;">
+                <button onclick="changeMonth(-1)" style="padding:6px 14px;border:1px solid #dee2e6;border-radius:6px;background:white;cursor:pointer;font-family:inherit;font-size:14px;">&larr;</button>
+                <button onclick="changeMonth(1)" style="padding:6px 14px;border:1px solid #dee2e6;border-radius:6px;background:white;cursor:pointer;font-family:inherit;font-size:14px;">&rarr;</button>
+              </div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+            <div class="cal-legend">
+              <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--sosa-green);"></div>Expedition</div>
+              <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--sosa-accent);"></div>Brand/Merch</div>
+              <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--sosa-blue);"></div>Education</div>
+            </div>
           </div>
-        </div>
-        <div class="calendar-grid" id="calendarGrid"></div>
-        <div class="cal-legend">
-          <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--sosa-green);"></div>Expedition Content</div>
-          <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--sosa-accent);"></div>Brand/Merch</div>
-          <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--sosa-blue);"></div>Education/Advocacy</div>
+          <!-- Detail panel side -->
+          <div id="calDetailPanel" style="flex:1;background:var(--sosa-gray-100);border-radius:12px;padding:24px;min-height:340px;display:flex;flex-direction:column;">
+            <div id="calDetailEmpty" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--sosa-gray-400);text-align:center;">
+              <div style="font-size:32px;margin-bottom:12px;">&#128197;</div>
+              <div style="font-size:14px;font-weight:600;">Click a day to see post details</div>
+              <div style="font-size:13px;margin-top:4px;">AI-generated captions, platforms, and post type</div>
+            </div>
+            <div id="calDetailContent" style="display:none;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+                <div>
+                  <div id="calDetailDate" style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--sosa-gray-400);"></div>
+                  <div id="calDetailTitle" style="font-size:18px;font-weight:700;margin-top:4px;color:var(--sosa-dark);"></div>
+                </div>
+                <div id="calDetailTypeBadge" style="padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:0.5px;"></div>
+              </div>
+              <div id="calDetailPlatforms" style="display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;"></div>
+              <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--sosa-gray-400);margin-bottom:8px;">AI-Generated Caption</div>
+              <div id="calDetailCaption" style="font-size:14px;line-height:1.7;color:var(--sosa-dark);background:white;padding:16px;border-radius:10px;border:1px solid var(--sosa-gray-200);"></div>
+              <div style="display:flex;gap:12px;margin-top:16px;">
+                <div id="calDetailFormat" style="flex:1;background:white;padding:12px;border-radius:10px;border:1px solid var(--sosa-gray-200);text-align:center;">
+                  <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--sosa-gray-400);">Format</div>
+                  <div id="calDetailFormatVal" style="font-size:14px;font-weight:700;margin-top:2px;color:var(--sosa-dark);"></div>
+                </div>
+                <div style="flex:1;background:white;padding:12px;border-radius:10px;border:1px solid var(--sosa-gray-200);text-align:center;">
+                  <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--sosa-gray-400);">Best Time</div>
+                  <div id="calDetailTime" style="font-size:14px;font-weight:700;margin-top:2px;color:var(--sosa-dark);"></div>
+                </div>
+                <div style="flex:1;background:white;padding:12px;border-radius:10px;border:1px solid var(--sosa-gray-200);text-align:center;">
+                  <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--sosa-gray-400);">Est. Reach</div>
+                  <div id="calDetailReach" style="font-size:14px;font-weight:700;margin-top:2px;color:var(--sosa-green);"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Impact Dashboard -->
+    <!-- Impact Dashboard (Interactive) -->
     <div class="demo-card">
       <div class="demo-header">
         <h3>Conservation Impact Dashboard</h3>
         <div class="demo-live-tag"><div class="demo-live-dot"></div>Live Demo</div>
       </div>
       <div class="demo-body">
-        <div class="impact-grid">
-          <div class="impact-card">
-            <div class="impact-value" data-target="47">0</div>
-            <div class="impact-label">Expeditions Completed</div>
-          </div>
-          <div class="impact-card">
-            <div class="impact-value" data-target="12">0</div>
-            <div class="impact-label">Partner NGOs Active</div>
-          </div>
-          <div class="impact-card">
-            <div class="impact-value" data-target="8">0</div>
-            <div class="impact-label">Countries Covered</div>
-          </div>
-          <div class="impact-card">
-            <div class="impact-value" data-target="340">0</div>
-            <div class="impact-label">Participants to Date</div>
-          </div>
-          <div class="impact-bar-container">
-            <div style="font-size:14px;font-weight:700;margin-bottom:16px;">Funds Directed to Partners (est.)</div>
-            <div class="impact-bar-row">
-              <div class="impact-bar-label">Care for Wild</div>
-              <div class="impact-bar-track"><div class="impact-bar-fill" data-width="85%"></div></div>
-              <div class="impact-bar-val">$85K</div>
-            </div>
-            <div class="impact-bar-row">
-              <div class="impact-bar-label">Big Life</div>
-              <div class="impact-bar-track"><div class="impact-bar-fill" data-width="62%"></div></div>
-              <div class="impact-bar-val">$62K</div>
-            </div>
-            <div class="impact-bar-row">
-              <div class="impact-bar-label">Saving the Blue</div>
-              <div class="impact-bar-track"><div class="impact-bar-fill" data-width="48%"></div></div>
-              <div class="impact-bar-val">$48K</div>
-            </div>
-            <div class="impact-bar-row">
-              <div class="impact-bar-label">ONCA</div>
-              <div class="impact-bar-track"><div class="impact-bar-fill" data-width="35%"></div></div>
-              <div class="impact-bar-val">$35K</div>
-            </div>
-            <div class="impact-bar-row">
-              <div class="impact-bar-label">GCF</div>
-              <div class="impact-bar-track"><div class="impact-bar-fill" data-width="28%"></div></div>
-              <div class="impact-bar-val">$28K</div>
-            </div>
-          </div>
+        <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+          <button class="impact-view-btn impact-view-active" onclick="switchImpactView('overview')">Overview</button>
+          <button class="impact-view-btn" onclick="switchImpactView('species')">Species Protected</button>
+          <button class="impact-view-btn" onclick="switchImpactView('expeditions')">Expeditions</button>
+          <button class="impact-view-btn" onclick="switchImpactView('funding')">Funding</button>
         </div>
+        <div id="impactContent"></div>
       </div>
     </div>
 
@@ -1352,54 +1365,52 @@ const scoreObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 scoreObserver.observe(document.getElementById('scoreRing'));
 
-// ─── Impact number counter ───
-const impactObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('.impact-value[data-target]').forEach(el => {
-        const target = parseInt(el.dataset.target);
-        let current = 0;
-        const step = Math.max(1, Math.floor(target / 40));
-        const interval = setInterval(() => {
-          current += step;
-          if (current >= target) { current = target; clearInterval(interval); }
-          el.textContent = current.toLocaleString();
-        }, 30);
-      });
-
-      // Animate bars
-      e.target.querySelectorAll('.impact-bar-fill').forEach(bar => {
-        bar.style.width = bar.dataset.width;
-      });
-
-      impactObserver.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.2 });
-document.querySelectorAll('.impact-grid').forEach(el => impactObserver.observe(el));
-
-// ─── Chat Demo ───
-const botResponses = {
-  'default': "Hey! Thanks for reaching out about SOSA. We've got some incredible expeditions coming up. Are you interested in a specific destination, or would you like to see what's available?",
-  'costa rica': "Great choice! Our Costa Rica 2026 Rainforest Expedition is filling up fast. It's a 7-day immersive trip where you'll work alongside local conservation teams protecting howler monkeys and sea turtles. Want me to send you the full itinerary and pricing?",
-  'price': "Our expeditions run around $5,200 per person for 7 days, which covers lodging, meals, transport, and all activities. The best part? Net proceeds after logistics go directly to our partner NGOs. You're literally funding conservation while experiencing it. Want to secure your spot?",
-  'alaska': "Alaska 2026 is going to be wild. Brown bear camping expedition in Katmai. Think waking up to grizzlies fishing for salmon 50 feet from your tent. Spots are limited to keep the group intimate. I can send you the details if you'd like!",
-  'trip': "We've got several expeditions launching in 2026:\n\n- Costa Rica (Rainforest)\n- Alaska (Brown Bears)\n- Botswana (Impact Safari)\n- Maldives (Shark Research)\n\nEach one is a hands-on conservation experience, not a tourist trip. Which one catches your eye?",
-  'book': "Amazing! Here's what happens next:\n\n1. I'll send you our detailed expedition guide\n2. You'll fill out a quick application (takes 2 min)\n3. Our team confirms your spot within 24 hrs\n\nDrop your email and I'll get that guide over to you right away!",
-  'who': "SOSA (Save Our Species Alliance) was founded by Blake Moynes. You might know him from The Bachelorette, but his real passion is wildlife conservation. He's a certified anti-poaching ranger who's worked with rhinos in South Africa, sharks in the Bahamas, and primates in Bolivia. SOSA connects people directly with conservation through hands-on expeditions.",
-  'merch': "Check out our shop at thesosa.com! Every piece features species from the IUCN Red List, and every $100+ purchase goes toward our Alliance Allocation Fund supporting wildlife NGOs worldwide. Got a species you're passionate about? Let me know and I'll point you to the right gear.",
-};
+// ─── UPGRADED Chat Demo (Deep SOSA Knowledge) ───
+const botKnowledge = [
+  // Expedition details
+  {keys:['costa rica','rainforest','turtle','monkey','howler'], resp:"Our Costa Rica 2026 Rainforest Expedition is one of our most popular trips. It's 7 days of hands-on conservation in the jungle. You'll do sea turtle night patrols on the beach (we tag, measure, and protect nesting mothers), conduct howler monkey population surveys in the canopy, and work alongside local conservationists who've been protecting this ecosystem for decades.\n\nPrice is around $5,200 per person, which covers all lodging, meals, transport, and activities. Net proceeds go directly to our partner NGOs on the ground. A few spots still open. Want me to send you the full itinerary?"},
+  {keys:['alaska','bear','grizzl','katmai','salmon','camp'], resp:"Alaska 2026 is going to be wild. We're doing a brown bear camping expedition in Katmai National Park. You'll be camping in bear country, observing grizzlies fishing for salmon during the summer run, and working alongside local researchers on population surveys and behavioral observation.\n\nThis is a small group trip. Limited to 7 research assistants per expedition to keep it intimate and low-impact. It's one of our most intense experiences. Price is around $5,200 for 7 days. Spots go fast on this one."},
+  {keys:['botswana','safari','elephant','lion','okavango'], resp:"Botswana 2026 is our Impact Safari. You'll be in the Okavango Delta tracking elephant herds, monitoring lion prides, and working with local communities on human-wildlife conflict resolution. This isn't a game drive from a jeep. You're in the field with researchers, collecting real data that informs conservation policy.\n\nApplications open June 1. Want to get on the early access waitlist?"},
+  {keys:['maldives','shark','whale','snorkel','marine','miyaru','ocean','reef'], resp:"The Maldives 2026 expedition is a shark research trip with Miyaru, a marine conservation organization. You'll snorkel alongside whale sharks, help tag Caribbean reef sharks, deploy BRUVs (baited remote underwater video surveillance), and contribute to data that protects these waters.\n\nIt's a week-long research intensive. Alumni get 48-hour early access before public launch. Want the details?"},
+  {keys:['bahamas','hammerhead','sawfish','saving the blue','andros'], resp:"Our Bahamas expedition is in partnership with Saving the Blue, based in East Andros. It's a week-long research intensive focused on hammerhead sharks, sawfish, silky sharks, and Caribbean reef sharks. You'll participate in drum line surveys, BRUVs deployment, poly ball captures, and mini marine biology classes led by resident scientists.\n\n7 research assistants per trip. This is real field science, and you're part of the team."},
+  {keys:['south africa','rhino','care for wild','anti-poaching','ranger','poach'], resp:"South Africa is where SOSA started. Our expeditions partner with Care for Wild, the world's largest rhino sanctuary. You'll work directly with orphaned rhinos (babies who lost their mothers to poaching), assist with rhino collaring for tracking, and train alongside certified anti-poaching rangers through our partnership with Global Conservation Force.\n\nBlake himself got his anti-poaching ranger certification here. It's the trip that changes the most people. Around $5,200 for 7 days."},
+  {keys:['bolivia','onca','primate','spider monkey','capuchin','amazon'], resp:"Our Bolivia expedition partners with ONCA Wildlife Rescue in the Amazon. You'll rehabilitate spider monkeys, capuchin monkeys, and squirrel monkeys that were seized from illegal wildlife trade. Daily work includes cage cleaning, building enrichment activities, behavioral observation, feeding, and environmental education in local schools.\n\nIt's conservation at its most personal. These animals literally come to know you by the end of the week."},
+  // Pricing and logistics
+  {keys:['price','cost','how much','expensive','afford','pay','money','budget'], resp:"Our expeditions run around $5,200 per person for a 7-day trip. That covers everything on the ground: lodging, all meals, transport within the destination, and all conservation activities and equipment.\n\nFlights to the destination are separate (you book your own). The key thing: net proceeds after covering logistics go directly to our partner nonprofit organizations. So your trip fee literally funds conservation. It's not a vacation markup, it's a mission-driven model.\n\nWe can also discuss payment plans if the upfront cost is a barrier. Want to chat about a specific trip?"},
+  {keys:['book','sign up','join','reserve','spot','apply','application','register'], resp:"Here's how it works:\n\n1. Pick your expedition (Costa Rica, Alaska, Botswana, Maldives, Bahamas, South Africa, or Bolivia)\n2. Fill out a quick application on our website (takes about 2 minutes)\n3. Our team reviews and confirms your spot within 24-48 hours\n4. You'll get a detailed expedition guide with everything you need\n\nHead to thesosa.com/pages/experiences to see all available trips and apply. Or drop your email here and I'll send you the guide directly!"},
+  {keys:['what to pack','packing','bring','gear','prepare','equipment'], resp:"Great question! Packing depends on the destination, but generally:\n\n- Quick-dry clothing (you WILL get dirty/wet)\n- Sturdy boots or hiking shoes (Baffin makes great ones, code SOSA15)\n- Headlamp (essential for night patrols)\n- Reusable water bottle\n- Sunscreen and insect repellent\n- Camera with waterproof protection (Nanuk case, code BLAKE30)\n- Personal medications\n- Adventure mindset\n\nWe send a full detailed packing list once you're confirmed. Each destination has specific requirements."},
+  // About SOSA and Blake
+  {keys:['who','blake','founder','bachelorette','started','sosa','about','what is','tell me'], resp:"SOSA stands for Save Our Species Alliance. It was founded by Blake Moynes in 2023. Blake appeared on The Bachelorette (Seasons 16 and 17), but his real calling is wildlife conservation. His journey started in 2018 when he read that Sudan, the last male northern white rhino, had died. In 2019, he flew one-way to South Africa to volunteer at Care for Wild rhino sanctuary and never looked back.\n\nHe's now a certified anti-poaching ranger through Global Conservation Force, and was honored as 'Compassionate Voice of the Year' by Lady Freethinker in 2024 for exposing animal cruelty in Thai zoos.\n\nSOSA's model: immersive conservation expeditions where real people work alongside real researchers. 60% of participants come back for another trip. Net proceeds fund the partner NGOs directly."},
+  {keys:['team','who works','staff','employee'], resp:"SOSA's team is intentionally small and hands-on. Blake leads every expedition personally. The core team includes SOSA Storytellers Rachael Tancock and Macaila Wagner who capture the on-the-ground content, plus videographers for documentary projects. Kate Kourtsidis handles communications (background in climate activism with Greenpeace Canada).\n\nBlake's been open about wearing a lot of hats and growing the team. That's actually one of the big opportunities for AI implementation."},
+  {keys:['partner','ngo','nonprofit','organization','charity','alliance'], resp:"SOSA partners with vetted frontline conservation organizations:\n\n- Care for Wild (South Africa) - world's largest rhino sanctuary\n- Global Conservation Force - anti-poaching ranger training\n- Saving the Blue (Bahamas) - shark and marine research\n- ONCA Wildlife Rescue (Bolivia) - primate rehabilitation\n- Big Life Foundation (Kenya) - wildlife conservation\n- David Suzuki Foundation (Canada) - environmental campaigns\n- Oceana - ocean conservation\n- Lady Freethinker - animal welfare investigations\n- Fahlo - wildlife tracking technology\n\nEvery expedition sends proceeds directly to these partners. The Alliance Allocation Fund (funded by $100+ merch purchases) also distributes to these orgs."},
+  {keys:['podcast','boots on the ground','listen','episode'], resp:"Blake hosts 'Boots on the Ground,' a podcast where he shares real stories from the field, interviews conservation researchers, and gives behind-the-scenes looks at SOSA expeditions. You can find it on major podcast platforms.\n\nIt's a great way to get a feel for what SOSA expeditions are actually like before committing to a trip."},
+  // Merch
+  {keys:['merch','shop','shirt','hat','hoodie','apparel','clothing','wear','toque','beanie','cap'], resp:"SOSA's merch is conservation-driven. Every piece features species from the IUCN Red List, raising awareness through what you wear. The lineup includes:\n\n- Toques/Beanies ($28)\n- Camper Caps ($40)\n- Sun Flex Hoodies ($49)\n- Rash Guards ($49)\n- Heavyweight Cotton Shirts ($46)\n- Trucker Hats and Dad Caps\n\nEvery purchase over $100 contributes to the Alliance Allocation Fund, which directly supports SOSA's partner wildlife NGOs. Shop at thesosa.com. Everything ships from our Shopify store."},
+  // Affiliate/discount codes
+  {keys:['discount','code','coupon','deal','save','affiliate'], resp:"Here are all of Blake's active partner codes:\n\n- SOSA15 - 15% off Baffin boots (field-tested expedition footwear)\n- SOSA15 - 15% off IQ Bars (clean expedition fuel)\n- BLAKE30 - 30% off Nanuk Cases (protect your camera gear)\n- BLAKE20 - 20% off Fahlo bracelets (track real animals in the wild)\n- 10% off Opolis Optics sunglasses (link in bio)\n\nBlake's full Amazon storefront for expedition essentials is also linked in his bio."},
+  // Return rate / social proof
+  {keys:['return','come back','again','repeat','review','testimonial','experience','worth'], resp:"60% of people who do a SOSA expedition come back for another one. That's not a marketing number, that's real. When you spend a week hand-feeding orphaned rhinos or tagging sharks at 2 AM, it changes something in you.\n\nPeople consistently say it's the most meaningful travel experience they've ever had. It's not a resort. It's not easy. But it's real, and that's what keeps people coming back.\n\nWant to hear from specific alumni? I can share their stories."},
+  // Safety
+  {keys:['safe','danger','risk','scary','worried','concern','insurance'], resp:"Safety is our top priority. Every expedition is run with experienced local guides, vetted partner organizations, and established field protocols. Blake personally leads trips and has extensive field experience across Africa, Central America, the Caribbean, and more.\n\nFor wildlife interactions, we follow strict distance protocols established by our partner researchers. Anti-poaching training is observational for participants. Shark research follows scientific handling procedures developed over decades.\n\nWe recommend travel insurance for all participants and provide detailed safety briefings before every expedition."},
+  // Conservation impact
+  {keys:['impact','difference','change','help','contribute','donate','fund'], resp:"Here's what SOSA has achieved:\n\n- Multiple expeditions across 8+ countries\n- Hundreds of participants trained in field conservation\n- Direct funding to 12+ partner NGOs\n- Supported Care for Wild's 500th rhino rescue\n- David Suzuki Foundation campaign that raised over $1 million for boreal caribou\n- Thai zoo animal cruelty investigation with Lady Freethinker\n- Ongoing shark research data for Saving the Blue's long-term population studies\n\nEvery expedition fee and every $100+ merch purchase goes directly to these efforts. This isn't greenwashing. The money hits the ground."},
+  // Fallback for general/greeting
+  {keys:['hi','hello','hey','sup','yo','what up'], resp:"Hey! Welcome to SOSA. Whether you're curious about our conservation expeditions, want to know more about Blake's mission, or just browsing, I'm here to help.\n\nHere's what most people ask about:\n- Our 2026 expedition lineup (Costa Rica, Alaska, Botswana, Maldives, Bahamas, South Africa, Bolivia)\n- Pricing and what's included\n- Blake's story and how SOSA started\n- Our partner organizations and conservation impact\n- Merch and discount codes\n\nWhat's on your mind?"},
+];
 
 function getBotResponse(msg) {
   const lower = msg.toLowerCase();
-  if (lower.includes('costa rica')) return botResponses['costa rica'];
-  if (lower.includes('price') || lower.includes('cost') || lower.includes('how much') || lower.includes('expensive')) return botResponses['price'];
-  if (lower.includes('alaska') || lower.includes('bear')) return botResponses['alaska'];
-  if (lower.includes('trip') || lower.includes('expedition') || lower.includes('available') || lower.includes('destination') || lower.includes('where')) return botResponses['trip'];
-  if (lower.includes('book') || lower.includes('sign up') || lower.includes('join') || lower.includes('reserve') || lower.includes('spot')) return botResponses['book'];
-  if (lower.includes('who') || lower.includes('blake') || lower.includes('sosa') || lower.includes('what is')) return botResponses['who'];
-  if (lower.includes('merch') || lower.includes('shop') || lower.includes('shirt') || lower.includes('hat') || lower.includes('apparel')) return botResponses['merch'];
-  return botResponses['default'];
+  let bestMatch = null;
+  let bestScore = 0;
+  for (const entry of botKnowledge) {
+    let score = 0;
+    for (const key of entry.keys) {
+      if (lower.includes(key)) score += key.length;
+    }
+    if (score > bestScore) { bestScore = score; bestMatch = entry; }
+  }
+  if (bestMatch && bestScore > 0) return bestMatch.resp;
+  return "Thanks for reaching out! I'd love to help. Are you interested in learning about our 2026 expeditions, hearing Blake's story, checking out merch, or something else? Just let me know what you're curious about and I'll point you in the right direction.";
 }
 
 let chatTimeout;
@@ -1409,84 +1420,410 @@ function sendChat() {
   if (!msg) return;
 
   const chatWindow = document.getElementById('chatWindow');
-  chatWindow.innerHTML += `<div class="chat-msg visitor">${msg}</div>`;
+  chatWindow.innerHTML += '<div class="chat-msg visitor">' + msg.replace(/</g,'&lt;') + '</div>';
   input.value = '';
 
-  // Typing indicator
-  chatWindow.innerHTML += `<div class="typing-indicator" id="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  chatWindow.innerHTML += '<div class="typing-indicator" id="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
   chatWindow.scrollTop = chatWindow.scrollHeight;
 
   clearTimeout(chatTimeout);
-  chatTimeout = setTimeout(() => {
-    const typing = document.getElementById('typing');
+  chatTimeout = setTimeout(function() {
+    var typing = document.getElementById('typing');
     if (typing) typing.remove();
-    const response = getBotResponse(msg);
-    chatWindow.innerHTML += `<div class="chat-msg bot">${response.replace(/\n/g, '<br>')}</div>`;
+    var response = getBotResponse(msg);
+    chatWindow.innerHTML += '<div class="chat-msg bot">' + response.replace(/\n/g, '<br>') + '</div>';
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }, 1200);
 }
 
-document.getElementById('chatInput').addEventListener('keydown', (e) => {
+document.getElementById('chatInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') sendChat();
 });
 
 // Auto-trigger first bot response
-setTimeout(() => {
-  const chatWindow = document.getElementById('chatWindow');
-  chatWindow.innerHTML += `<div class="typing-indicator" id="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+setTimeout(function() {
+  var chatWindow = document.getElementById('chatWindow');
+  chatWindow.innerHTML += '<div class="typing-indicator" id="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
   chatWindow.scrollTop = chatWindow.scrollHeight;
-  setTimeout(() => {
-    const typing = document.getElementById('typing');
+  setTimeout(function() {
+    var typing = document.getElementById('typing');
     if (typing) typing.remove();
-    chatWindow.innerHTML += `<div class="chat-msg bot">Hey! So excited you're interested in Costa Rica! 🌿 We do still have a few spots left, but they're going fast. It's a 7-day immersive trip where you'll be working hands-on with local conservationists protecting sea turtles and howler monkeys. Would you like me to send you the full itinerary?</div>`;
+    chatWindow.innerHTML += '<div class="chat-msg bot">Hey! So excited you\'re interested in Costa Rica! We do still have a few spots left, but they\'re going fast. It\'s a 7-day immersive trip where you\'ll be working hands-on with local conservationists protecting sea turtles and howler monkeys. The price is $5,200 per person, covering all lodging, meals, transport, and activities. Net proceeds go directly to our partner NGOs. Would you like me to send you the full itinerary?</div>';
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }, 1500);
 }, 800);
 
-// ─── Content Calendar ───
-const contentPlan = {
-  1: {type:'green',label:'BTS: Costa Rica prep'},
-  3: {type:'blue',label:'Shark conservation reel'},
-  5: {type:'green',label:'Expedition highlight reel'},
-  7: {type:'gold',label:'New merch drop: Sea Turtle tee'},
-  8: {type:'blue',label:'IUCN Red List education post'},
-  10: {type:'green',label:'Alumni spotlight: Sarah\'s story'},
-  12: {type:'green',label:'Expedition testimonial carousel'},
-  14: {type:'blue',label:'Anti-poaching awareness day'},
-  15: {type:'gold',label:'Affiliate: Baffin boots field test'},
-  17: {type:'green',label:'Alaska expedition teaser'},
-  19: {type:'blue',label:'Rhino conservation update'},
-  21: {type:'green',label:'Costa Rica countdown: 2 weeks'},
-  22: {type:'gold',label:'Merch restock announcement'},
-  24: {type:'blue',label:'Partner spotlight: Care for Wild'},
-  26: {type:'green',label:'Packing list for Costa Rica'},
-  28: {type:'gold',label:'Affiliate: Fahlo tracking bracelet'},
-  29: {type:'blue',label:'Bolivia ONCA monkey rehabilitation'},
-  30: {type:'green',label:'Trip launch: Maldives early access'},
+// ─── Interactive Email Drip Demo ───
+const dripData = {
+  southafrica: {
+    name: 'South Africa',
+    emails: [
+      {day:'Immediately',subject:'Welcome to the SOSA Alumni Family',preview:'"You didn\'t just take a trip. You became part of something bigger..."',stat:'68% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>You just spent 7 days at Care for Wild, the world\'s largest rhino sanctuary. You held orphaned calves. You trained with anti-poaching rangers. You saw what conservation looks like up close.</p><p>That changes a person.</p><p>You\'re now part of the SOSA Alumni network: a community of people who\'ve stood in the field and decided this matters. We don\'t forget our people, and we don\'t let the connection end when the flight home lands.</p><p>Over the next few weeks, I\'ll be sharing your trip photos, your personal impact report (exactly where your money went), and some exclusive opportunities only alumni get access to.</p><p>Welcome to the family.</p><p>Blake</p>'},
+      {day:'Day 3',subject:'Your South Africa Trip: Photos + Video',preview:'Curated gallery from your expedition. Relive every moment.',stat:'72% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>Your photos and video highlights from South Africa are ready.</p><p>I know these first few days back feel strange. You\'re sitting in traffic thinking about that rhino calf you fed at sunrise. That\'s normal. That feeling is the whole point.</p><p>We\'ve put together a curated gallery from your expedition: the ranger training, the rhino collaring, the sunsets over the bush, and all the moments in between. Share them with your people. Let them see what you experienced.</p><p>[VIEW YOUR GALLERY]</p><p>These memories are yours. The impact is permanent.</p><p>Blake</p>'},
+      {day:'Day 7',subject:'Your Impact Report: Here\'s What You Funded',preview:'"Your expedition directly funded 3 months of anti-poaching patrols."',stat:'81% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>This is my favorite email to send.</p><p>Your South Africa expedition didn\'t just give you an experience. It directly funded:</p><ul><li>3 months of anti-poaching patrol operations at Care for Wild</li><li>Formula milk and supplements for 12 orphaned rhino calves</li><li>Veterinary care for 3 rhinos recovering from poaching injuries</li><li>Ranger equipment upgrades (boots, radios, night vision)</li></ul><p>This is where your money went. Not to a marketing budget. Not to overhead. To the ground. To the animals. To the people protecting them.</p><p>You made this happen.</p><p>[VIEW FULL IMPACT REPORT]</p><p>Blake</p>'},
+      {day:'Day 14',subject:'Exclusive: Early Access to Alaska 2026',preview:'Alumni get first pick. 60% of you come back for more.',stat:'',status:'scheduled',
+        body:'<p>Hey [First Name],</p><p>60% of people who do a SOSA expedition come back for another one. I think you understand why now.</p><p>Alaska 2026 is officially in the works. Brown bear camping in Katmai. Grizzlies fishing for salmon. Working with local researchers on population surveys. Waking up in bear country.</p><p>As a SOSA alum, you get 48-hour early access before we open it to the public. Spots are extremely limited on this one.</p><p>[RESERVE YOUR SPOT - ALUMNI EARLY ACCESS]</p><p>See you in the wild.</p><p>Blake</p>'},
+      {day:'Day 30',subject:'The SOS Alliance Awaits',preview:'Join the inner circle. Direct line to field researchers.',stat:'',status:'scheduled',
+        body:'<p>Hey [First Name],</p><p>You\'ve been on the ground. You\'ve seen the work firsthand. You\'re not a follower anymore. You\'re an ally.</p><p>The SOS Alliance is our inner circle: a community of expedition alumni, conservation professionals, and committed supporters who stay connected to the mission year-round.</p><p>As a member you get:</p><ul><li>Direct access to our partner researchers in the field</li><li>Quarterly impact reports from every partner NGO</li><li>Vote on where the next Alliance Allocation Fund dollars go</li><li>First access to every new expedition before public launch</li><li>Exclusive content from the field that never hits social media</li></ul><p>[JOIN THE SOS ALLIANCE]</p><p>This isn\'t a newsletter. It\'s a direct line to the front lines.</p><p>Blake</p>'},
+    ]
+  },
+  costarica: {
+    name: 'Costa Rica',
+    emails: [
+      {day:'Immediately',subject:'Welcome Home from the Jungle',preview:'"The rainforest stays with you long after you leave..."',stat:'65% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>You just spent 7 days in the Costa Rican rainforest. You patrolled beaches at 2 AM protecting nesting sea turtles. You surveyed howler monkey troops in the canopy. You lived alongside conservationists who dedicate their lives to this ecosystem.</p><p>The jungle stays with you. The sounds, the humidity, the feeling of watching a leatherback turtle lay eggs in the sand while you stand guard. That doesn\'t leave.</p><p>You\'re now part of something bigger. Welcome to the SOSA Alumni family.</p><p>Blake</p>'},
+      {day:'Day 3',subject:'Your Costa Rica Gallery Is Ready',preview:'Sea turtle patrols, jungle treks, and the crew that became family.',stat:'70% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>Your Costa Rica expedition photos and video highlights are ready to view and share.</p><p>The night patrols. The monkey surveys. The muddy boots and tired smiles at the end of 14-hour days. It\'s all here.</p><p>[VIEW YOUR GALLERY]</p><p>Share these with your people. Let them see what conservation actually looks like.</p><p>Blake</p>'},
+      {day:'Day 7',subject:'Impact Report: What Your Trip Protected',preview:'"4 sea turtle nests protected. 3 monkey troops surveyed."',stat:'78% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>Here\'s exactly what your Costa Rica expedition accomplished:</p><ul><li>4 leatherback sea turtle nests identified, measured, and protected</li><li>3 howler monkey troops surveyed for population data</li><li>82+ sea turtle eggs documented for hatchling tracking</li><li>Local conservation team funded for 2 additional months of beach patrols</li><li>Environmental education materials delivered to 2 local schools</li></ul><p>Every data point you collected feeds into long-term research that shapes protection policy for this ecosystem. That\'s not a souvenir. That\'s a legacy.</p><p>[VIEW FULL IMPACT REPORT]</p><p>Blake</p>'},
+      {day:'Day 14',subject:'Alaska Is Calling: Alumni Early Access',preview:'From the jungle to bear country. Your next expedition awaits.',stat:'',status:'scheduled',
+        body:'<p>Hey [First Name],</p><p>You survived the rainforest. Ready for something completely different?</p><p>Alaska 2026. Brown bear camping in Katmai. From tropical jungle to rugged wilderness. Same mission, different ecosystem. 48-hour alumni early access is live now.</p><p>[RESERVE YOUR SPOT]</p><p>Blake</p>'},
+      {day:'Day 30',subject:'Stay Connected: Join the Alliance',preview:'Your expedition ended. Your impact doesn\'t have to.',stat:'',status:'scheduled',
+        body:'<p>Hey [First Name],</p><p>The trip is over. The mission isn\'t.</p><p>Join the SOS Alliance and stay connected to the conservation work you experienced firsthand. Quarterly impact updates, researcher access, early expedition booking, and a vote on where funds go next.</p><p>[JOIN THE SOS ALLIANCE]</p><p>Blake</p>'},
+    ]
+  },
+  bahamas: {
+    name: 'Bahamas',
+    emails: [
+      {day:'Immediately',subject:'You Swam With Sharks. Now What?',preview:'"Most people fear sharks. You just helped protect them."',stat:'71% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>A week ago you were deploying BRUVs in the Bahamas, tagging reef sharks, and running drum line surveys with the Saving the Blue research team. Most people watch shark documentaries. You lived one.</p><p>The data you helped collect feeds directly into long-term population studies that protect these waters. Every shark you tagged, every survey you ran, it all matters.</p><p>Welcome to the SOSA Alumni family. The ocean remembers its allies.</p><p>Blake</p>'},
+      {day:'Day 3',subject:'Your Bahamas Expedition: Photos + Video',preview:'Underwater footage, research moments, and island sunsets.',stat:'74% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>Your Bahamas expedition gallery is live. Underwater footage of hammerheads, the drum line surveys at dawn, poly ball captures, and every incredible moment from the week.</p><p>[VIEW YOUR GALLERY]</p><p>Share these. Most people never get to see marine research from the inside.</p><p>Blake</p>'},
+      {day:'Day 7',subject:'Impact Report: Your Shark Research Data',preview:'"14 sharks tagged. 47 BRUV deployments. Your data is now in the system."',stat:'83% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>Your Bahamas expedition research contributions:</p><ul><li>14 Caribbean reef sharks tagged for long-term tracking</li><li>47 BRUV deployments across 6 survey sites</li><li>3 hammerhead sighting records added to the population database</li><li>Sawfish habitat mapping data collected at 4 new locations</li><li>Saving the Blue research team funded for next quarter\'s field work</li></ul><p>This data doesn\'t sit in a drawer. It feeds directly into published research and policy recommendations for Bahamian marine protected areas.</p><p>[VIEW FULL IMPACT REPORT]</p><p>Blake</p>'},
+      {day:'Day 14',subject:'From the Ocean to the Bush: South Africa Early Access',preview:'Shark researcher to rhino protector. Your next chapter.',stat:'',status:'scheduled',
+        body:'<p>Hey [First Name],</p><p>You\'ve done marine conservation. Ready to go on land?</p><p>South Africa 2026. Care for Wild rhino sanctuary. Anti-poaching ranger training. A completely different kind of field work, same world-changing impact. Alumni early access is live.</p><p>[RESERVE YOUR SPOT]</p><p>Blake</p>'},
+      {day:'Day 30',subject:'The Alliance: Stay in the Research Loop',preview:'Get quarterly updates from the sharks you tagged.',stat:'',status:'scheduled',
+        body:'<p>Hey [First Name],</p><p>The sharks you tagged are still being tracked. Join the SOS Alliance to get quarterly updates from Saving the Blue on the research your data contributed to. Plus early expedition access, researcher Q&As, and impact voting.</p><p>[JOIN THE SOS ALLIANCE]</p><p>Blake</p>'},
+    ]
+  },
+  alaska: {
+    name: 'Alaska',
+    emails: [
+      {day:'Immediately',subject:'You Survived Bear Country',preview:'"Waking up to grizzlies 50 feet from your tent changes you."',stat:'73% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>You just camped with brown bears in Katmai. You watched grizzlies fish for salmon at dawn. You helped researchers collect population data in one of the last truly wild places on Earth.</p><p>Alaska has a way of stripping everything back to what matters. The wild doesn\'t care about your inbox. It demands presence.</p><p>Welcome to the SOSA Alumni family. You earned this one.</p><p>Blake</p>'},
+      {day:'Day 3',subject:'Your Alaska Expedition: Photos + Video',preview:'Bears, salmon, wilderness. Every moment captured.',stat:'76% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>Your Alaska expedition gallery is ready. The grizzlies at the falls, the salmon runs, the campfire under a sky with no light pollution for hundreds of miles. It\'s all here.</p><p>[VIEW YOUR GALLERY]</p><p>Try explaining this trip to someone who wasn\'t there. Then just show them these photos instead.</p><p>Blake</p>'},
+      {day:'Day 7',subject:'Impact Report: What Your Data Revealed',preview:'"Population counts. Behavioral patterns. Real science."',stat:'79% open rate',status:'sent',
+        body:'<p>Hey [First Name],</p><p>Your Alaska expedition contributions:</p><ul><li>Brown bear population survey data across 3 observation zones</li><li>Behavioral pattern documentation during peak salmon run</li><li>Mother-cub pair tracking for 8 identified family groups</li><li>Habitat assessment data for proposed conservation corridor</li><li>Local research team funded for continued monitoring</li></ul><p>This is the kind of baseline data that determines whether a habitat gets protected or developed. You helped build the case for protection.</p><p>[VIEW FULL IMPACT REPORT]</p><p>Blake</p>'},
+      {day:'Day 14',subject:'Botswana Awaits: Alumni Early Access',preview:'From Alaska wilderness to the African bush. Same mission.',stat:'',status:'scheduled',
+        body:'<p>Hey [First Name],</p><p>You did bear country. Ready for lion country?</p><p>Botswana 2026 Impact Safari. Track elephants. Monitor lion prides. Work with Okavango Delta communities. A completely different ecosystem, same SOSA approach. Alumni get first access.</p><p>[RESERVE YOUR SPOT]</p><p>Blake</p>'},
+      {day:'Day 30',subject:'Join the Alliance: Your Impact Continues',preview:'Stay connected. Stay informed. Stay wild.',stat:'',status:'scheduled',
+        body:'<p>Hey [First Name],</p><p>The bears don\'t know your name, but the researchers do. Join the SOS Alliance for quarterly field updates, early expedition access, and a voice in where conservation funds go next.</p><p>[JOIN THE SOS ALLIANCE]</p><p>Blake</p>'},
+    ]
+  }
 };
+
+let currentTrip = 'southafrica';
+
+function switchTrip(trip) {
+  currentTrip = trip;
+  document.querySelectorAll('.drip-trip-btn').forEach(function(b) { b.classList.remove('drip-trip-active'); });
+  event.target.classList.add('drip-trip-active');
+  closeDripEmail();
+  renderDrip();
+}
+
+function renderDrip() {
+  var data = dripData[currentTrip];
+  var html = '';
+  data.emails.forEach(function(email, i) {
+    html += '<div class="drip-step ' + email.status + ' drip-step-clickable" onclick="openDripEmail(' + i + ')">' +
+      '<div class="drip-day">' + email.day + '</div>' +
+      '<div class="drip-subject">' + email.subject + '</div>' +
+      '<div class="drip-preview">' + email.preview + '</div>' +
+      (email.stat ? '<div class="drip-stat">' + email.stat + '</div>' : '') +
+      '</div>';
+  });
+  document.getElementById('dripTimeline').innerHTML = html;
+}
+
+function openDripEmail(index) {
+  var email = dripData[currentTrip].emails[index];
+  document.getElementById('dripEmailSubject').textContent = email.subject;
+  document.getElementById('dripEmailBody').innerHTML = email.body;
+  document.getElementById('dripEmailPreview').style.display = 'block';
+  document.getElementById('dripEmailPreview').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function closeDripEmail() {
+  document.getElementById('dripEmailPreview').style.display = 'none';
+}
+
+renderDrip();
+
+// ─── Interactive Impact Dashboard ───
+function animateValue(el, target, prefix, suffix) {
+  prefix = prefix || '';
+  suffix = suffix || '';
+  var current = 0;
+  var step = Math.max(1, Math.floor(target / 35));
+  var interval = setInterval(function() {
+    current += step;
+    if (current >= target) { current = target; clearInterval(interval); }
+    el.textContent = prefix + current.toLocaleString() + suffix;
+  }, 25);
+}
+
+function switchImpactView(view) {
+  document.querySelectorAll('.impact-view-btn').forEach(function(b) { b.classList.remove('impact-view-active'); });
+  event.target.classList.add('impact-view-active');
+  renderImpactView(view);
+}
+
+function renderImpactView(view) {
+  var el = document.getElementById('impactContent');
+  if (view === 'overview') {
+    el.innerHTML = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">' +
+      '<div class="impact-stat-card"><div class="iv" style="font-size:32px;font-weight:800;color:var(--sosa-green);">0</div><div style="font-size:12px;font-weight:600;color:var(--sosa-gray-500);margin-top:4px;">Expeditions</div></div>' +
+      '<div class="impact-stat-card"><div class="iv" style="font-size:32px;font-weight:800;color:var(--sosa-green);">0</div><div style="font-size:12px;font-weight:600;color:var(--sosa-gray-500);margin-top:4px;">Participants</div></div>' +
+      '<div class="impact-stat-card"><div class="iv" style="font-size:32px;font-weight:800;color:var(--sosa-green);">0</div><div style="font-size:12px;font-weight:600;color:var(--sosa-gray-500);margin-top:4px;">Partner NGOs</div></div>' +
+      '<div class="impact-stat-card"><div class="iv" style="font-size:32px;font-weight:800;color:var(--sosa-green);">0</div><div style="font-size:12px;font-weight:600;color:var(--sosa-gray-500);margin-top:4px;">Countries</div></div>' +
+      '</div>' +
+      '<div style="background:var(--sosa-gray-100);border-radius:12px;padding:20px;">' +
+        '<div style="font-size:14px;font-weight:700;margin-bottom:16px;">Total Funds Directed to Partners</div>' +
+        '<div style="display:flex;align-items:baseline;gap:8px;margin-bottom:16px;"><span class="iv-total" style="font-size:36px;font-weight:800;color:var(--sosa-green);">$0</span><span style="font-size:13px;color:var(--sosa-gray-400);">across all partner organizations</span></div>' +
+        '<div id="fundBars"></div>' +
+      '</div>';
+    var vals = el.querySelectorAll('.iv');
+    animateValue(vals[0], 47, '', '');
+    animateValue(vals[1], 340, '', '');
+    animateValue(vals[2], 12, '', '');
+    animateValue(vals[3], 8, '', '');
+    animateValue(el.querySelector('.iv-total'), 258, '$', 'K');
+    var barData = [{name:'Care for Wild',val:85,max:100},{name:'Big Life Foundation',val:62,max:100},{name:'Saving the Blue',val:48,max:100},{name:'ONCA',val:35,max:100},{name:'Global Conservation Force',val:28,max:100}];
+    var barHtml = '';
+    barData.forEach(function(b) {
+      barHtml += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">' +
+        '<div style="width:140px;font-size:12px;font-weight:600;color:var(--sosa-gray-500);text-align:right;">' + b.name + '</div>' +
+        '<div style="flex:1;height:10px;background:var(--sosa-gray-200);border-radius:100px;overflow:hidden;"><div class="anim-bar" style="height:100%;border-radius:100px;background:linear-gradient(90deg,var(--sosa-green),var(--sosa-green-light));width:0%;transition:width 1.5s ease-out;" data-w="' + b.val + '%"></div></div>' +
+        '<div style="width:40px;font-size:12px;font-weight:700;">$' + b.val + 'K</div></div>';
+    });
+    document.getElementById('fundBars').innerHTML = barHtml;
+    setTimeout(function() {
+      el.querySelectorAll('.anim-bar').forEach(function(bar) { bar.style.width = bar.dataset.w; });
+    }, 100);
+  } else if (view === 'species') {
+    el.innerHTML = '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">' +
+      speciesCard('White Rhinoceros','Near Threatened','Care for Wild, South Africa','500+ orphans rescued and rehabilitated','85%') +
+      speciesCard('Hammerhead Shark','Critically Endangered','Saving the Blue, Bahamas','14+ tagged per expedition for population studies','72%') +
+      speciesCard('Spider Monkey','Vulnerable','ONCA, Bolivia','Rehabilitation from illegal wildlife trade','60%') +
+      speciesCard('Brown Bear','Least Concern','Field Researchers, Alaska','Population surveys and behavioral monitoring','90%') +
+      speciesCard('Leatherback Sea Turtle','Vulnerable','Partners, Costa Rica','Nest protection and hatchling tracking','65%') +
+      speciesCard('African Elephant','Endangered','Big Life Foundation, Kenya','Anti-poaching patrols and corridor protection','78%') +
+      '</div>';
+    setTimeout(function() {
+      el.querySelectorAll('.sp-bar').forEach(function(bar) { bar.style.width = bar.dataset.w; });
+    }, 100);
+  } else if (view === 'expeditions') {
+    el.innerHTML = '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">' +
+      expCard('South Africa','Rhino Sanctuary + Anti-Poaching','Care for Wild, GCF','12 trips completed','var(--sosa-green)') +
+      expCard('Bahamas','Shark Research Intensive','Saving the Blue','8 trips completed','var(--sosa-blue)') +
+      expCard('Bolivia','Primate Rehabilitation','ONCA Wildlife Rescue','6 trips completed','var(--sosa-accent)') +
+      expCard('Costa Rica','Rainforest Conservation','Local Partners','5 trips completed','var(--sosa-green)') +
+      expCard('Alaska','Brown Bear Research','Field Researchers','4 trips completed','var(--sosa-teal)') +
+      expCard('Kenya','Wildlife Anti-Poaching','Big Life Foundation','3 trips completed','var(--sosa-accent)') +
+      '</div>' +
+      '<div style="background:var(--sosa-gray-100);border-radius:12px;padding:20px;margin-top:12px;text-align:center;">' +
+        '<div style="font-size:13px;color:var(--sosa-gray-500);font-weight:600;">60% of participants return for another expedition</div>' +
+        '<div style="width:100%;height:8px;background:var(--sosa-gray-200);border-radius:100px;margin-top:8px;overflow:hidden;"><div class="anim-bar" data-w="60%" style="height:100%;border-radius:100px;background:var(--sosa-green);width:0%;transition:width 1.5s ease-out;"></div></div>' +
+      '</div>';
+    setTimeout(function() {
+      el.querySelectorAll('.anim-bar').forEach(function(bar) { bar.style.width = bar.dataset.w; });
+    }, 100);
+  } else if (view === 'funding') {
+    el.innerHTML = '<div style="text-align:center;margin-bottom:20px;"><div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--sosa-gray-400);">Total Conservation Funding Directed</div><div class="iv-fund" style="font-size:48px;font-weight:800;color:var(--sosa-green);margin-top:4px;">$0</div></div>' +
+      '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">' +
+        fundCard('Expedition Fees','Primary revenue. $5,200/person, net proceeds after logistics go to partner NGOs.','$192K','74%') +
+        fundCard('Merch Sales','Every $100+ purchase funds the Alliance Allocation Fund.','$38K','15%') +
+        fundCard('Direct Donations','Campaigns, GoFundMe drives, event fundraisers.','$18K','7%') +
+        fundCard('Brand Partnerships','Affiliate revenue from Baffin, Fahlo, IQ Bar, Nanuk, Opolis.','$10K','4%') +
+      '</div>' +
+      '<div style="background:var(--sosa-green-lighter);border-radius:12px;padding:16px;margin-top:12px;text-align:center;font-size:13px;color:var(--sosa-green);font-weight:600;">100% of net expedition proceeds + Alliance Allocation Fund go directly to frontline conservation NGOs</div>';
+    animateValue(el.querySelector('.iv-fund'), 258, '$', 'K');
+    setTimeout(function() {
+      el.querySelectorAll('.anim-bar').forEach(function(bar) { bar.style.width = bar.dataset.w; });
+    }, 100);
+  }
+}
+
+function speciesCard(name, status, partner, impact, prog) {
+  var statusColor = status.includes('Critically') ? 'var(--sosa-red)' : status.includes('Endangered') ? 'var(--sosa-orange)' : status.includes('Vulnerable') ? 'var(--sosa-accent)' : 'var(--sosa-green)';
+  return '<div style="background:var(--sosa-gray-100);border-radius:12px;padding:20px;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><span style="font-size:16px;font-weight:700;">' + name + '</span><span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;background:' + statusColor + ';color:white;">' + status + '</span></div>' +
+    '<div style="font-size:12px;color:var(--sosa-gray-500);margin-bottom:4px;">' + partner + '</div>' +
+    '<div style="font-size:13px;color:var(--sosa-dark);margin-bottom:10px;">' + impact + '</div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="font-size:11px;color:var(--sosa-gray-400);width:80px;">Protection</div><div style="flex:1;height:6px;background:var(--sosa-gray-200);border-radius:100px;overflow:hidden;"><div class="sp-bar anim-bar" data-w="' + prog + '" style="height:100%;border-radius:100px;background:' + statusColor + ';width:0%;transition:width 1.5s ease-out;"></div></div><div style="font-size:11px;font-weight:700;">' + prog + '</div></div></div>';
+}
+
+function expCard(location, focus, partner, count, color) {
+  return '<div style="background:var(--sosa-gray-100);border-radius:12px;padding:20px;border-left:4px solid ' + color + ';">' +
+    '<div style="font-size:16px;font-weight:700;margin-bottom:4px;">' + location + '</div>' +
+    '<div style="font-size:13px;color:var(--sosa-gray-500);margin-bottom:2px;">' + focus + '</div>' +
+    '<div style="font-size:12px;color:var(--sosa-gray-400);margin-bottom:8px;">' + partner + '</div>' +
+    '<div style="font-size:12px;font-weight:700;color:var(--sosa-green);">' + count + '</div></div>';
+}
+
+function fundCard(source, desc, amount, pct) {
+  return '<div style="background:var(--sosa-gray-100);border-radius:12px;padding:20px;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;"><span style="font-size:14px;font-weight:700;">' + source + '</span><span style="font-size:18px;font-weight:800;color:var(--sosa-green);">' + amount + '</span></div>' +
+    '<div style="font-size:12px;color:var(--sosa-gray-500);margin-bottom:10px;">' + desc + '</div>' +
+    '<div style="height:6px;background:var(--sosa-gray-200);border-radius:100px;overflow:hidden;"><div class="anim-bar" data-w="' + pct + '" style="height:100%;border-radius:100px;background:var(--sosa-green);width:0%;transition:width 1.5s ease-out;"></div></div></div>';
+}
+
+switchImpactView('overview');
+
+// ─── Content Calendar (Full Interactive) ───
+let calCurrentMonth = 3; // 0-indexed: 3 = April
+let calCurrentYear = 2026;
+let calSelectedDay = null;
+
+const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+const allContentPlans = {
+  '2026-3': { // April
+    1:  {type:'green',label:'BTS: Costa Rica Prep Day',format:'Reel',platforms:['Instagram','TikTok'],time:'11:00 AM EST',reach:'18K-24K',caption:'Packing for 7 days in the Costa Rican rainforest hits different when your "gear list" includes research equipment and rubber boots. Getting ready to lead our next group of conservation volunteers into the jungle. This isn\'t a vacation. This is the real thing. #SOSA #ConservationExpedition #CostaRica'},
+    3:  {type:'blue',label:'Shark Conservation Reel',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'2:00 PM EST',reach:'22K-35K',caption:'Most people fear sharks. We study them. Last year in the Bahamas, our team helped tag 14 Caribbean reef sharks for long-term population monitoring with Saving the Blue. Every data point matters when you\'re fighting to protect a species that\'s been here for 400 million years. #SharkConservation #SavingTheBlue'},
+    5:  {type:'green',label:'Expedition Highlight Reel',format:'Reel',platforms:['Instagram','YouTube Shorts'],time:'12:00 PM EST',reach:'30K-45K',caption:'60% of the people who come on a SOSA expedition come back for another one. This is why. There\'s nothing like standing 10 feet from a white rhino you just helped collar, knowing that data will protect her herd for years. Conservation changes you. #SOSA #WildlifeConservation'},
+    7:  {type:'gold',label:'New Merch Drop: Sea Turtle Tee',format:'Carousel',platforms:['Instagram','Facebook'],time:'10:00 AM EST',reach:'12K-18K',caption:'NEW DROP: The Hawksbill Collection. Every piece tells the story of a critically endangered species. Every $100+ purchase goes directly to our Alliance Allocation Fund supporting frontline conservation NGOs. Wear the mission. Link in bio. #SOSAmerch #ConservationFashion'},
+    8:  {type:'blue',label:'IUCN Red List Education Post',format:'Carousel',platforms:['Instagram','LinkedIn','Twitter'],time:'9:00 AM EST',reach:'15K-20K',caption:'The IUCN Red List isn\'t just a list. It\'s a countdown. Right now, over 44,000 species are threatened with extinction. That\'s not a distant problem. That\'s happening on our watch. Swipe to see which species we\'re working to protect and what you can do today. #IUCNRedList #Extinction'},
+    10: {type:'green',label:'Alumni Spotlight: Sarah\'s Story',format:'Carousel',platforms:['Instagram','Facebook','LinkedIn'],time:'11:00 AM EST',reach:'14K-20K',caption:'Sarah came to South Africa as a graphic designer who "just wanted to see elephants." She left as a certified volunteer ranger who now fundraises for Care for Wild every quarter. This is what happens when conservation becomes personal. Full story in carousel. #SOSAalumni'},
+    12: {type:'green',label:'Expedition Testimonial Carousel',format:'Carousel',platforms:['Instagram'],time:'1:00 PM EST',reach:'10K-16K',caption:'"I thought I was going on a trip. I came back with a purpose." Real words from real people who\'ve walked alongside anti-poaching rangers, tagged sharks, and rehabilitated primates with SOSA. Swipe for testimonials. Next trip: Costa Rica. Link in bio.'},
+    14: {type:'blue',label:'Anti-Poaching Awareness Day',format:'Reel + Story Series',platforms:['Instagram','TikTok','YouTube Shorts','Twitter'],time:'8:00 AM EST',reach:'40K-65K',caption:'I spent 3 weeks training alongside anti-poaching rangers in South Africa. The things I saw changed everything I thought I knew about conservation. These men and women risk their lives every single night so that species like the black rhino still exist tomorrow. Today we honor them. #AntiPoaching'},
+    15: {type:'gold',label:'Affiliate: Baffin Boots Field Test',format:'Reel',platforms:['Instagram','TikTok'],time:'3:00 PM EST',reach:'16K-22K',caption:'Field tested in the Bolivian Amazon. River crossings, jungle treks, and 14-hour days in the mud. These Baffin boots didn\'t just survive, they thrived. Code SOSA15 for 15% off if you\'re gearing up for your own adventure. #BaffinAmbassador #FieldTested'},
+    17: {type:'green',label:'Alaska Expedition Teaser',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'12:00 PM EST',reach:'25K-40K',caption:'ALASKA 2026. Brown bear camping in Katmai. Waking up to grizzlies fishing for salmon. Working with local researchers on population surveys. This is not a zoo. This is not a tour. This is SOSA. Limited spots. Applications open now. Link in bio. #AlaskaExpedition #BrownBears'},
+    19: {type:'blue',label:'Rhino Conservation Update',format:'Carousel',platforms:['Instagram','LinkedIn','Twitter'],time:'10:00 AM EST',reach:'18K-28K',caption:'Update from the field: Care for Wild just rescued their 500th orphaned rhino. 500 babies who lost their mothers to poaching, now being raised by hand to one day return to the wild. SOSA has been there since day one. Here\'s where things stand now. #RhinoConservation #CareForWild'},
+    21: {type:'green',label:'Costa Rica Countdown: 2 Weeks',format:'Story Series + Post',platforms:['Instagram','Facebook'],time:'11:00 AM EST',reach:'20K-30K',caption:'2 WEEKS until our Costa Rica rainforest expedition. Sea turtles. Howler monkeys. Dense jungle. 7 days of hands-on conservation with a small crew of people who actually care. A few spots left. If this is calling you, don\'t wait. Link in bio. #CostaRica #SOSA2026'},
+    22: {type:'gold',label:'Merch Restock Announcement',format:'Story + Post',platforms:['Instagram'],time:'10:00 AM EST',reach:'8K-12K',caption:'RESTOCKED. The Sun Flex Hoodie and Camper Cap are back. These sold out in 72 hours last time. Conservation gear that actually looks good and funds the mission. Shop now, link in bio.'},
+    24: {type:'blue',label:'Partner Spotlight: Care for Wild',format:'Carousel',platforms:['Instagram','LinkedIn','Facebook'],time:'9:00 AM EST',reach:'16K-24K',caption:'PARTNER SPOTLIGHT: Care for Wild is the world\'s largest rhino sanctuary, and one of SOSA\'s founding partners. Every expedition we run to South Africa puts volunteers directly in their facility, working alongside their incredible team. Here\'s what they do and why it matters.'},
+    26: {type:'green',label:'Packing List for Costa Rica',format:'Carousel',platforms:['Instagram','TikTok'],time:'2:00 PM EST',reach:'12K-18K',caption:'What to pack for 7 days in the Costa Rican rainforest (conservation edition). This isn\'t your typical travel packing list. Rubber boots, headlamps, quick-dry everything, and zero expectations of cell service. Save this for when you book your spot. #PackingList #CostaRica'},
+    28: {type:'gold',label:'Affiliate: Fahlo Tracking Bracelet',format:'Reel',platforms:['Instagram','TikTok'],time:'1:00 PM EST',reach:'14K-20K',caption:'Every Fahlo bracelet tracks a real animal in the wild. I\'ve worn mine through 6 countries and 3 continents of conservation work. Code BLAKE20 for 20% off. Track a shark, a rhino, or an elephant. Know exactly where they are, in real time. #Fahlo #WildlifeTracking'},
+    29: {type:'blue',label:'Bolivia ONCA Monkey Rehab',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'11:00 AM EST',reach:'20K-32K',caption:'In the Bolivian Amazon, ONCA Wildlife Rescue rehabilitates spider monkeys, capuchins, and squirrel monkeys seized from illegal wildlife trade. Our volunteers feed them, build enrichment activities, and help prepare them for release. This is conservation at its most personal.'},
+    30: {type:'green',label:'Trip Launch: Maldives Early Access',format:'Carousel + Reel',platforms:['Instagram','Facebook','Twitter','Email'],time:'9:00 AM EST',reach:'35K-50K',caption:'JUST ANNOUNCED: Maldives 2026. Shark research expedition with Miyaru. Snorkel alongside whale sharks, help tag reef sharks, and contribute to groundbreaking marine conservation data. Alumni get 48-hour early access starting NOW. Public launch Friday. #Maldives #SOSA2026'},
+  },
+  '2026-4': { // May
+    2:  {type:'green',label:'Costa Rica Expedition: Day 1',format:'Reel',platforms:['Instagram','TikTok'],time:'6:00 PM EST',reach:'35K-55K',caption:'WE\'RE HERE. Day 1 in the Costa Rican rainforest. Met the team, unpacked at the research station, and already spotted a toucan from the porch. Tomorrow we start sea turtle patrol. This crew is incredible. Follow along for the full 7 days. #CostaRica #SOSAexpedition'},
+    3:  {type:'green',label:'Costa Rica: Sea Turtle Night Patrol',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'8:00 AM EST',reach:'40K-60K',caption:'2 AM on a pitch-black beach in Costa Rica. Flashlights off. Voices down. We just watched a leatherback sea turtle lay 82 eggs in the sand. Our team measured, tagged, and documented everything. This is what conservation looks like. No filters. #SeaTurtles'},
+    5:  {type:'green',label:'Costa Rica: Howler Monkey Survey',format:'Carousel',platforms:['Instagram','Facebook'],time:'12:00 PM EST',reach:'18K-28K',caption:'Day 4 in the jungle. Today we conducted population surveys on howler monkey troops in the canopy. The sound of a howler monkey at dawn is something you never forget. Swipe for the full field day recap.'},
+    7:  {type:'green',label:'Costa Rica: Expedition Wrap',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'5:00 PM EST',reach:'45K-70K',caption:'7 days. 4 sea turtle nests protected. 3 monkey troops surveyed. 1 team that became family. Costa Rica 2026 is in the books. To every person who showed up and gave everything: thank you. This is what SOSA is about. Next stop: Alaska. #SOSA #CostaRica2026'},
+    9:  {type:'blue',label:'World Migratory Bird Day',format:'Carousel',platforms:['Instagram','Twitter','LinkedIn'],time:'9:00 AM EST',reach:'15K-22K',caption:'Today is World Migratory Bird Day. Billions of birds cross continents twice a year, navigating by stars, magnetic fields, and instinct. Habitat loss is shrinking their rest stops. Here\'s what you need to know and what you can do. #WMBD #BirdConservation'},
+    12: {type:'gold',label:'Costa Rica Merch Capsule Drop',format:'Carousel + Story',platforms:['Instagram'],time:'10:00 AM EST',reach:'10K-16K',caption:'Inspired by the rainforest. The Costa Rica Capsule is live. Leatherback tee, jungle green hoodie, and expedition patch. Limited run. Every purchase funds the next expedition. Link in bio.'},
+    14: {type:'green',label:'Alaska Countdown: 6 Weeks',format:'Reel',platforms:['Instagram','TikTok'],time:'12:00 PM EST',reach:'20K-30K',caption:'6 WEEKS until we\'re camping with brown bears in Katmai, Alaska. Grizzlies. Salmon runs. Wilderness research. Final spots available. This one books out every year. Link in bio.'},
+    16: {type:'blue',label:'Endangered Species Day',format:'Reel + Carousel',platforms:['Instagram','TikTok','Twitter','LinkedIn'],time:'8:00 AM EST',reach:'50K-80K',caption:'Today is Endangered Species Day. There are 44,000+ species currently threatened with extinction. SOSA works on the ground with the organizations fighting to change that number. Here are 5 species we\'re actively protecting, and how you can help today.'},
+    19: {type:'green',label:'Alumni Q&A: Alaska Prep',format:'Live + Clips',platforms:['Instagram','YouTube'],time:'7:00 PM EST',reach:'8K-14K',caption:'Going live tonight at 7 PM with SOSA alumni who\'ve done the Alaska expedition before. Ask them anything. What to expect, what to pack, what changed for them. Tune in if you\'re thinking about joining us this year.'},
+    21: {type:'gold',label:'Affiliate: Nanuk Cases Field Review',format:'Reel',platforms:['Instagram','TikTok'],time:'2:00 PM EST',reach:'12K-18K',caption:'My camera gear has survived the Bolivian Amazon, the African bush, and shark diving in the Bahamas. All inside a Nanuk case. Code BLAKE30 for 30% off. If you\'re serious about field work, protect your gear. #NanukCases'},
+    24: {type:'blue',label:'Partner Spotlight: Saving the Blue',format:'Carousel',platforms:['Instagram','LinkedIn'],time:'10:00 AM EST',reach:'14K-20K',caption:'PARTNER SPOTLIGHT: Saving the Blue is a research organization in the Bahamas studying hammerhead sharks, sawfish, and reef sharks. SOSA sends research assistants to help with surveys, tagging, and underwater monitoring. Here\'s why their work matters.'},
+    27: {type:'green',label:'Botswana Expedition Teaser',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'12:00 PM EST',reach:'28K-42K',caption:'BOTSWANA 2026. Impact Safari. Track elephants. Monitor lion prides. Work with local communities protecting the Okavango Delta. This is conservation at scale. Applications open June 1. Get on the waitlist now. Link in bio.'},
+    30: {type:'blue',label:'World Otter Day',format:'Reel',platforms:['Instagram','TikTok'],time:'11:00 AM EST',reach:'25K-38K',caption:'Happy World Otter Day to the most underrated conservation ambassadors on the planet. 13 otter species. 5 threatened. All vital to freshwater ecosystems. Protect the rivers, protect the otters. #WorldOtterDay'},
+  },
+  '2026-2': { // March
+    1:  {type:'blue',label:'World Wildlife Day',format:'Carousel + Reel',platforms:['Instagram','TikTok','Twitter','LinkedIn'],time:'8:00 AM EST',reach:'55K-85K',caption:'March 3 is World Wildlife Day. But for the rangers, researchers, and volunteers we work with, every day is wildlife day. Here are the frontline heroes SOSA supports, and why their work has never been more important. #WorldWildlifeDay'},
+    4:  {type:'green',label:'South Africa Trip Recap',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'12:00 PM EST',reach:'32K-48K',caption:'Just landed back from South Africa. 10 days with Care for Wild. Helped collar 2 rhinos, monitored 6 orphans, and trained alongside anti-poaching rangers. This work never gets old. Full recap in carousel tomorrow.'},
+    7:  {type:'gold',label:'Alliance Allocation Fund Update',format:'Carousel',platforms:['Instagram','LinkedIn'],time:'10:00 AM EST',reach:'12K-18K',caption:'TRANSPARENCY UPDATE: Here\'s exactly where your merch purchases and expedition fees went in Q1 2026. $258K directed to 5 partner NGOs across 4 countries. Full breakdown in carousel. Your money, their mission, real impact.'},
+    10: {type:'green',label:'Bahamas Shark Research BTS',format:'Reel',platforms:['Instagram','TikTok'],time:'2:00 PM EST',reach:'28K-42K',caption:'Behind the scenes of a shark research day in the Bahamas with Saving the Blue. Setting drum lines at dawn, processing sharks by noon, releasing by sunset. Our volunteers get to do all of it. Applications for Bahamas 2026 open next month.'},
+    13: {type:'blue',label:'Ocean Conservation Reel',format:'Reel',platforms:['Instagram','TikTok','YouTube Shorts'],time:'11:00 AM EST',reach:'22K-35K',caption:'The ocean produces 50% of the world\'s oxygen. It absorbs 30% of CO2 emissions. And we\'ve explored less than 5% of it. Conservation isn\'t just about land animals. Protecting our oceans protects everything. #OceanConservation'},
+    16: {type:'gold',label:'Affiliate: IQ Bar Expedition Fuel',format:'Story + Reel',platforms:['Instagram','TikTok'],time:'3:00 PM EST',reach:'10K-15K',caption:'Real talk: finding clean fuel for 14-hour field days is hard. IQ Bars are what I take into the field. Brain food, no junk, easy to pack. Code SOSA15 for 15% off. #IQBar #ExpeditionFuel'},
+    19: {type:'green',label:'Costa Rica Early Bird Announcement',format:'Carousel + Story',platforms:['Instagram','Facebook','Email'],time:'9:00 AM EST',reach:'20K-30K',caption:'EARLY BIRD: Costa Rica 2026 is officially open. Rainforest conservation. Sea turtles. Howler monkeys. 7 days that will change how you see the world. Alumni get priority booking this week. Public launch March 26. Link in bio.'},
+    22: {type:'blue',label:'World Water Day',format:'Carousel',platforms:['Instagram','Twitter','LinkedIn'],time:'8:00 AM EST',reach:'15K-22K',caption:'World Water Day. Clean water is a wildlife issue. It\'s a human issue. It\'s a conservation issue. Here\'s how freshwater ecosystems connect everything, and what we\'re doing about it. #WorldWaterDay'},
+    25: {type:'green',label:'Alaska Equipment Prep',format:'Reel',platforms:['Instagram','TikTok'],time:'1:00 PM EST',reach:'16K-24K',caption:'Prepping gear for Alaska. Bear spray, satellite communicator, waterproof everything. Brown bear camping in Katmai requires a different level of preparation. Follow along as we get ready for one of our most intense expeditions yet.'},
+    28: {type:'gold',label:'Merch: Rhino Collection Preview',format:'Story Series + Post',platforms:['Instagram'],time:'10:00 AM EST',reach:'8K-14K',caption:'Sneak peek at our Rhino Collection dropping next week. Designed in collaboration with Care for Wild. Every piece tells the story of a species fighting for survival. Sign up for drop alerts, link in bio.'},
+    31: {type:'green',label:'Expedition Applications Closing',format:'Reel + Story',platforms:['Instagram','Facebook'],time:'11:00 AM EST',reach:'18K-28K',caption:'LAST CALL: Costa Rica expedition applications close this Friday. If you\'ve been thinking about it, this is your sign. Don\'t let this one pass. Link in bio to apply.'},
+  }
+};
+
+function getContentPlan(year, month) {
+  return allContentPlans[year + '-' + month] || {};
+}
+
+function getDaysInMonth(year, month) { return new Date(year, month + 1, 0).getDate(); }
+function getFirstDayOfWeek(year, month) { const d = new Date(year, month, 1).getDay(); return d === 0 ? 6 : d - 1; }
 
 function renderCalendar() {
   const grid = document.getElementById('calendarGrid');
   grid.innerHTML = '';
-  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  days.forEach(d => { grid.innerHTML += `<div class="cal-day-header">${d}</div>`; });
+  document.getElementById('calMonthLabel').textContent = monthNames[calCurrentMonth] + ' ' + calCurrentYear;
 
-  // April 2026 starts on Wednesday (index 2)
-  const startDay = 2;
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  days.forEach(d => { grid.innerHTML += '<div class="cal-day-header">' + d + '</div>'; });
+
+  const startDay = getFirstDayOfWeek(calCurrentYear, calCurrentMonth);
+  const daysInMonth = getDaysInMonth(calCurrentYear, calCurrentMonth);
+  const plan = getContentPlan(calCurrentYear, calCurrentMonth);
+
   for (let i = 0; i < startDay; i++) {
-    grid.innerHTML += `<div class="cal-day" style="border:none;"></div>`;
+    grid.innerHTML += '<div class="cal-day" style="border:none;"></div>';
   }
-  for (let d = 1; d <= 30; d++) {
-    const content = contentPlan[d];
-    const dotHtml = content ? `<div class="cal-dot ${content.type}"></div>` : '';
-    const title = content ? ` title="${content.label}"` : '';
-    grid.innerHTML += `<div class="cal-day"${title}><div class="cal-day-num">${d}</div>${dotHtml}</div>`;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const content = plan[d];
+    const dotHtml = content ? '<div class="cal-dot ' + content.type + '"></div>' : '';
+    const selected = (d === calSelectedDay) ? ' style="border-color:var(--sosa-green);background:var(--sosa-green-lighter);"' : '';
+    const dayEl = document.createElement('div');
+    dayEl.className = 'cal-day';
+    if (d === calSelectedDay) {
+      dayEl.style.borderColor = 'var(--sosa-green)';
+      dayEl.style.background = 'var(--sosa-green-lighter)';
+    }
+    dayEl.innerHTML = '<div class="cal-day-num">' + d + '</div>' + dotHtml;
+    dayEl.onclick = (function(day) { return function() { selectCalDay(day); }; })(d);
+    grid.appendChild(dayEl);
   }
 }
-renderCalendar();
 
-function prevMonth() {}
-function nextMonth() {}
+function selectCalDay(day) {
+  calSelectedDay = day;
+  renderCalendar();
+  const plan = getContentPlan(calCurrentYear, calCurrentMonth);
+  const content = plan[day];
+  const emptyEl = document.getElementById('calDetailEmpty');
+  const contentEl = document.getElementById('calDetailContent');
+
+  if (!content) {
+    emptyEl.style.display = 'flex';
+    contentEl.style.display = 'none';
+    emptyEl.innerHTML = '<div style="font-size:32px;margin-bottom:12px;">&#128308;</div><div style="font-size:14px;font-weight:600;">No post scheduled</div><div style="font-size:13px;margin-top:4px;max-width:260px;">This day is open. AI recommends rest days between posts to avoid audience fatigue.</div>';
+    return;
+  }
+
+  emptyEl.style.display = 'none';
+  contentEl.style.display = 'block';
+
+  const typeColors = { green: {bg:'rgba(15,61,55,0.08)',color:'var(--sosa-green)',label:'Expedition'}, gold: {bg:'rgba(200,169,110,0.15)',color:'#8a6d3b',label:'Brand/Merch'}, blue: {bg:'rgba(41,128,185,0.1)',color:'var(--sosa-blue)',label:'Education'} };
+  const tc = typeColors[content.type];
+
+  document.getElementById('calDetailDate').textContent = monthNames[calCurrentMonth] + ' ' + day + ', ' + calCurrentYear;
+  document.getElementById('calDetailTitle').textContent = content.label;
+
+  const badge = document.getElementById('calDetailTypeBadge');
+  badge.textContent = tc.label;
+  badge.style.background = tc.bg;
+  badge.style.color = tc.color;
+
+  const platEl = document.getElementById('calDetailPlatforms');
+  platEl.innerHTML = content.platforms.map(function(p) {
+    return '<span style="padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600;background:var(--sosa-gray-200);color:var(--sosa-dark);">' + p + '</span>';
+  }).join('');
+
+  document.getElementById('calDetailCaption').textContent = content.caption;
+  document.getElementById('calDetailFormatVal').textContent = content.format;
+  document.getElementById('calDetailTime').textContent = content.time;
+  document.getElementById('calDetailReach').textContent = content.reach;
+}
+
+function changeMonth(dir) {
+  calSelectedDay = null;
+  calCurrentMonth += dir;
+  if (calCurrentMonth > 11) { calCurrentMonth = 0; calCurrentYear++; }
+  if (calCurrentMonth < 0) { calCurrentMonth = 11; calCurrentYear--; }
+  renderCalendar();
+  document.getElementById('calDetailEmpty').style.display = 'flex';
+  document.getElementById('calDetailContent').style.display = 'none';
+  document.getElementById('calDetailEmpty').innerHTML = '<div style="font-size:32px;margin-bottom:12px;">&#128197;</div><div style="font-size:14px;font-weight:600;">Click a day to see post details</div><div style="font-size:13px;margin-top:4px;">AI-generated captions, platforms, and post type</div>';
+}
+
+renderCalendar();
 
 // ─── Nav scroll spy ───
 const sections = document.querySelectorAll('section[id]');
